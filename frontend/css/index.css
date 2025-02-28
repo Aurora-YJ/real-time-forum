@@ -6,7 +6,6 @@ body {
 
 header {
     background-color: #005F20;
-    height: 20%;
 }
 header .contentofthebar{
     display: flex;
@@ -15,6 +14,7 @@ header .contentofthebar{
     margin: auto;
     height: 100%;
     align-items: center;
+    height: 20%;
 }
 
 header .title {

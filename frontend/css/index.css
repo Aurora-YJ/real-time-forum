@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #3F4F44;
+    overflow: hidden;
 }
 
 header {
@@ -30,6 +31,7 @@ header .title a{
     font-family: Knewave;
     letter-spacing: 3px;
     
+    
 }
 
 header .contentofthebar .rightbar {
@@ -39,25 +41,31 @@ header .contentofthebar .rightbar {
 header .contentofthebar .rightbar .forhone {
     height:50px;
     width: 50px;
-    margin-right: 20px;
+ 
+
+    margin-right: 10px;
 }
 
 header .contentofthebar .rightbar .forhone a {
-    width: 90%;
     text-decoration: none;
     color: aliceblue;
+    font-size: 15px;
     font-family: Knewave;
 }
 
+
 header .contentofthebar .rightbar .forhone a i {
     margin-left: 10px;
+    
 }
 
 header .contentofthebar .rightbar .forbuttons {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-right: 100px;
     width: 150px;
+    
 }
 
 
@@ -75,6 +83,398 @@ header .contentofthebar .rightbar .forbuttons  form button {
 }
 
 main {
-    width: 100%;
+    width: 75%;
+    margin: auto;
     height: 100vh;
+}
+
+main .buttons {
+    height: 60px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+main .buttons form button {
+    height: 90%;
+    width: 450px;
+    border-radius: 15px;
+    border-width: 3px;
+    background-color: #A27B5C;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+main .buttons form .btnhome {
+    border-top-color: #005F20;
+    border-left-color: #005F20;
+    border-right-color: #005F20;
+    border-bottom-color: #005F20;
+}
+
+main .buttons form .btnhome i {
+    color: #005F20;
+}
+
+main .buttons form .btnchats i {
+    color: blue;
+}
+
+main .buttons form .btnsettings i {
+    color: red;
+}
+
+
+@media (min-width: 320px) and (max-width: 480px){
+    header .title {
+ 
+        font-size: 15px;
+      
+     }
+     header .contentofthebar{
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: auto;
+        align-items: center;
+        height: 20%;
+    }
+
+    header .contentofthebar .rightbar {
+        margin-right: 100px;
+    }
+    header .contentofthebar .rightbar .forhone {
+        margin-bottom: 10px;
+        
+    }
+    header .contentofthebar .rightbar .forhone a {
+        text-decoration: none;
+        color: aliceblue;
+        font-size: 10px;
+        font-family: Knewave;
+        
+    }
+   
+     header .contentofthebar .rightbar .forhone a i {
+        margin-left: 2px;
+        margin-top: 20px;
+        font-size: 10px;
+    }
+   
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 50px;
+        margin-left: 10px;
+    }
+    
+    header .contentofthebar .rightbar .forbuttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 30px;
+        width: 70px;
+        
+    }
+    
+       
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 70px;
+        height: 20px;
+        font-size: 12px;
+        font-weight: bolder;
+        font-family: sans-serif;
+        letter-spacing: 1px;
+        
+    
+    }
+    
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 40px;
+        margin-right: 5px;
+    }
+    header .contentofthebar .rightbar .forhone a i {
+        margin-left: 5px;
+    }
+    
+    
+   
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 100px;
+        height: 40px;
+        font-size: 13px;
+        border-radius: 8px;
+        font-weight: bolder;
+        font-family: sans-serif;        
+    
+    }
+
+    main {
+        width: 99%;
+        margin: auto;
+        height: 100vh;
+    }
+
+    main .buttons {
+        height: 50px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    main .buttons form button {
+        height: 90%;
+        width: 120px;
+        border-radius: 15px;
+        border-width: 3px;
+        background-color: #A27B5C;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 13px;
+        letter-spacing: 3px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 822px){
+    header .title {
+ 
+        font-size: 30px;
+      
+     }
+     header .contentofthebar{
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+        align-items: center;
+        height: 20%;
+    }
+
+    header .contentofthebar .rightbar {
+        max-width: 100px;
+    }
+    header .contentofthebar .rightbar .forhone {
+        margin-bottom: 10px;
+
+        
+    }
+    header .contentofthebar .rightbar .forhone a {
+        text-decoration: none;
+        color: aliceblue;
+        font-size: 15px;
+        font-family: Knewave;
+        
+    }
+   
+     header .contentofthebar .rightbar .forhone a i {
+        margin-left: 2px;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+   
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 80px;
+        margin-left: 10px;
+    }
+    
+    header .contentofthebar .rightbar .forbuttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 30px;
+        width: 100px;
+        
+    }
+    
+       
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 100px;
+        height: 20px;
+        font-size: 30px;
+        font-weight: bolder;
+        font-family: sans-serif;
+        letter-spacing: 1px;
+        
+    
+    }
+    
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 40px;
+        margin-right: 5px;
+    }
+    header .contentofthebar .rightbar .forhone a i {
+        margin-left: 5px;
+    }
+    
+    
+   
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 120px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 8px;
+        font-weight: bolder;
+        font-family: sans-serif;        
+    
+    }
+
+    main {
+        width: 80%;
+        margin: auto;
+        height: 100vh;
+    }
+
+    main .buttons {
+        height: 50px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    main .buttons form button {
+        height: 90%;
+        width: 200px;
+        border-radius: 15px;
+        border-width: 3px;
+        background-color: #A27B5C;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 3px;
+    }
+}
+
+
+@media (min-width:  8220px) and (max-width: 1440px){
+    header .title {
+ 
+        font-size: 30px;
+      
+     }
+     header .contentofthebar{
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+        align-items: center;
+        height: 20%;
+    }
+
+    header .contentofthebar .rightbar {
+        margin-right: 100px;
+    }
+    header .contentofthebar .rightbar .forhone {
+        margin-bottom: 10px;
+
+        
+    }
+    header .contentofthebar .rightbar .forhone a {
+        text-decoration: none;
+        color: aliceblue;
+        font-size: 15px;
+        font-family: Knewave;
+        
+    }
+   
+     header .contentofthebar .rightbar .forhone a i {
+        margin-left: 2px;
+        margin-top: 20px;
+        font-size: 15px;
+    }
+   
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 80px;
+        margin-left: 10px;
+    }
+    
+    header .contentofthebar .rightbar .forbuttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 30px;
+        width: 100px;
+        
+    }
+    
+       
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 100px;
+        height: 20px;
+        font-size: 30px;
+        font-weight: bolder;
+        font-family: sans-serif;
+        letter-spacing: 1px;
+        
+    
+    }
+    
+    header .contentofthebar .rightbar .forhone {
+        height:50px;
+        width: 40px;
+        margin-right: 5px;
+    }
+    header .contentofthebar .rightbar .forhone a i {
+        margin-left: 5px;
+    }
+    
+    
+   
+    header .contentofthebar .rightbar .forbuttons  form button {
+        background-color: red;
+        color: aliceblue;
+        width: 120px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 8px;
+        font-weight: bolder;
+        font-family: sans-serif;        
+    
+    }
+
+    main {
+        width: 80%;
+        margin: auto;
+        height: 100vh;
+    }
+
+    main .buttons {
+        height: 50px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    main .buttons form button {
+        height: 90%;
+        width: 260px;
+        border-radius: 15px;
+        border-width: 3px;
+        background-color: #A27B5C;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 18px;
+        letter-spacing: 3px;
+    }
 }

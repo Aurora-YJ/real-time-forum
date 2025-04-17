@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	chat "forum/backend/chatt"
 	"forum/backend/database"
 	"forum/backend/handlers"
 	"forum/backend/midlware"
@@ -12,8 +11,7 @@ import (
 
 func main() {
 	db := database.CreateTables()
-	clients := chat.NewClients(db)
-	//routes.RegisterRoutes(db)
+	
 
 	http.HandleFunc("/frontend", handlers.ServerStatic)
 	http.HandleFunc("POST /sign-in", func(w http.ResponseWriter, r *http.Request) { handlers.SignInHandler(w, r, db) })
@@ -24,10 +22,7 @@ func main() {
 	})
 	http.Handle("/frontend/", http.StripPrefix("/frontend/", http.FileServer(http.Dir("frontend"))))
 
-	http.HandleFunc("/chat", midlware.Authorization(
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			chat.ChatHandler(w, r, db, clients)
-		}), db))
+	
 	http.HandleFunc("/addpost", midlware.Authorization(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			handlers.AddPost(w, r, db)

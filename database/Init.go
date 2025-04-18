@@ -19,14 +19,17 @@ func Init() (*sql.DB, error) {
 	}
 
 	err = creat_database(db)
+	if err!=nil{
+		return nil ,err
+	}
 	return db, nil
 }
 
 func creat_database(db *sql.DB) error {
 
-	file, err := os.Open("sql.sql")
+	file, err := os.Open("database/sql.sql")
 	if err != nil {
-		return nil
+		return err
 	}
 
 	data, err := io.ReadAll(file)

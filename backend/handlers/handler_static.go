@@ -5,15 +5,13 @@ import (
 	"os"
 )
 
-func Handle_css(w http.ResponseWriter, r *http.Request) {
+func HandleStatic(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		return
 	}
-
-	file , err := os.Stat(r.URL.Path[1:])
+	file, err := os.Stat(r.URL.Path[1:])
 	if err != nil || file.IsDir() {
 		return
 	}
-
-	http.ServeFile(w, r, r.URL.Path[1:] )
+	http.ServeFile(w, r, r.URL.Path[1:])
 }

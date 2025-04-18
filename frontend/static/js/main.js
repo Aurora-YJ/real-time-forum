@@ -5,5 +5,5 @@ let isLoggedIn = await isLogged()
 if (isLoggedIn) {
     console.log("HHHHH")
 } else {
-    console.log("qqqqq");
+    console.log("qqqqq")
 }

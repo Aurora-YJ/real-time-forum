@@ -10,13 +10,19 @@ export async function isLogged() {
         if (!rep.ok) {
             throw new Error('Failed to connect to the server')
         }
+        
 
         const data = await rep.json()
-        if (data.isLoggedIn) {
-            return true
-        } else {
-            return false
-        }
+
+        console.log(daat);
+        
+        
+        // if (data.isLoggedIn) {
+        //     return true
+        // } else {
+            
+        //     return false
+        // }
         
     } catch (error) {
         console.log("func islogged:",error)

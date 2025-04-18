@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS users (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserName VARCHAR(30) NOT NULL,
+    EMAIL VARCHAR(50) NOT NULL UNIQUE,
+    Passwordd char(20) NOT NULL,
+    datecreation DATE NOT NULL,
+    Session TEXT,
+    Expired DATE 
+);

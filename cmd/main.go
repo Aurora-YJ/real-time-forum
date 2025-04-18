@@ -2,15 +2,43 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"forum/cmd/routes"
+	"forum/database"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
-	
-	routes.Handle_routers()
+	db, err := database.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sig := 	make(chan os.Signal, 1)
+	signal.Notify(sig , os.Interrupt, syscall.SIGALRM)
+
+	routes.Handle_routers(db)
+
 	fmt.Println("your serve on : http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+
+	go func() {
+		if err := http.ListenAndServe(":8080", nil) ; err != nil {
+			log.Fatal("server error:", err)
+		}
+	}()
+
+	<-sig
+
+	err = db.Close()
+	if err != nil {
+		log.Println("\nerror to close database", err)
+	} else {
+		fmt.Println("\ndatabase is closed (:")
+	}
+	
 }
 
 /*

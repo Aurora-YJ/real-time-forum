@@ -10,7 +10,7 @@ import (
 type Userlog struct {
 	Nicknameoremail  string `json:"nameOrEmail"`
 	Password    string `json:"password"`
-	ConPassword string `json:"confirmPassword"`
+	ConPassword string `json:"confpassword"`
 }
 
 func Login(w http.ResponseWriter, r *http.Request, db *sql.DB) {

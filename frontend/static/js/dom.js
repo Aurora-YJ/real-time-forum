@@ -4,6 +4,7 @@ export const registerdom = `
 </div> 
 <div id="continer">
       <div class="registering">
+ 
         <input class="Nickname" type="text" name="Nickname"  placeholder="your Nickname..." required>
         <div class="firstandlastname">
             <input type="text" name="firstname" placeholder="your firstname..." required>
@@ -20,8 +21,9 @@ export const registerdom = `
             <input type="password" name="password" placeholder="your password..." required />
             <input type="password" name="confirm_password" placeholder="confirm_password..." required />
         </div>
-        <button id="signup" class="signup" type="submit">sign-up</button>
-        <button id="signin" class="signin" type="submit">sing-in</button>
+        <input id="signup" class="signup" type="button" value="sign-up"/>
+        <input id="signin" class="signin" value="change to sing-in"/>
+      
       </div>
    </div>
 `
@@ -36,8 +38,8 @@ export const logindom = `
               <input type="password" name="password" placeholder="your password..." required />
               <input type="password" name="confirm_password" placeholder="confirm_password..." required />
           </div>
-          <button id="signup" class="signup" type="submit">sign-up</button>
-          <button id="signin" class="signin" type="submit">sing-in</button>
+          <input id="signin" class="signin" type="button" value="sing-in"/>
+          <input id="signup" class="signup" value="change to sign-up"/>
         </div>
     </div>
 `

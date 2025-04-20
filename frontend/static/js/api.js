@@ -1,9 +1,8 @@
-import { debounce } from "./registerandlogin.js";
 
 export function registerInfo() {
     const regBtn = document.getElementById('signup');
 
-    regBtn.addEventListener('click', debounce(async function (e) {
+    regBtn.addEventListener('click', async function (e) {
         e.preventDefault();
 
         const nickname = document.querySelector('[name="Nickname"]').value;
@@ -19,10 +18,16 @@ export function registerInfo() {
             return;
         }
 
-        if (password !== confirmPassword) {
-            showError("Passwords do not match.");
+        if (!isValidEmail(email)) {
+            showError("Invalid email format...");
             return;
         }
+        
+        if (password !== confirmPassword) {
+            showError("Passwords do not match...");
+            return;
+        }
+
 
         try {
             const response = await fetch("/register", {
@@ -30,37 +35,45 @@ export function registerInfo() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nickname, firstname, lastname, gender, email, password , confirmPassword})
+                body: JSON.stringify({ nickname, firstname, lastname, gender, email, password, confirmPassword })
             });
 
             if (!response.ok) {
                 showError("Failed to register. Please try again.");
-                return
+                return;
             }
 
-         
         } catch (error) {
-          
+            console.log("hhhhhhhhhhhhhh");
             console.error(error);
         }
-    }, 500))
+    });
 }
- 
+
 export function LoginInfo() {
-    const log = document.getElementById("signin")
-    log.addEventListener('click', debounce(async function (e) {
-        e.preventDefault()
+    const log = document.getElementById("signin");
+    log.addEventListener('click', async function (e) {
+        e.preventDefault();
 
-        const nameOrEmail = document.querySelector('[name="Nicknameoremail"]')
-        const password = document.querySelector('[name="password"]').value;
-        const confirmPassword = document.querySelector('[name="confirm_password"]').value;
+        const nameOrEmail = document.querySelector('[name="Nicknameoremail"]').value
+        const password = document.querySelector('[name="password"]').value
+        const confpassword = document.querySelector('[name="confirm_password"]').value
 
-        if (!nameOrEmail || !password || !confirmPassword) {
+        if (!nameOrEmail || !password) {
             showError("Please fill in all fields before continuing...");
             return;
         }
-        if (password !== confirmPassword) {
-            showError("Passwords do not match.");
+
+        if (isLikelyEmail(nameOrEmail)) {
+            if (!isValidEmail(nameOrEmail)) {
+                showError("Invalid email format...");
+                return;
+            }
+        }
+       
+        
+        if (password != confpassword ) {
+            showError("Passwords do not match...");
             return;
         }
 
@@ -70,22 +83,20 @@ export function LoginInfo() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nameOrEmail, password , confirmPassword })
+                body: JSON.stringify({ nameOrEmail, password , confpassword})
             });
-            console.log("hi");
-            
+
+
             if (!response.ok) {
-                showError("Failed to register. Please try again.");
-                return
+                showError("Failed to login. Please try again.");
+                return;
             }
 
-         
         } catch (error) {
-          
             console.error(error);
         }
 
-    }), 500)
+    });
 }
 
 function showError(message) {
@@ -95,5 +106,14 @@ function showError(message) {
     errorDiv.style.opacity = '1';
     setTimeout(() => {
         errorDiv.style.opacity = '0';
-    }, 2000)
+    }, 2000);
+}
+
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+function isLikelyEmail(str) {
+    return /@/.test(str) && /\./.test(str);
 }

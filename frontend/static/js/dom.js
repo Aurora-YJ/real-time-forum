@@ -1,3 +1,28 @@
+export const registerdom = `
+ <div id="continer">
+      <div class="registering">
+        <input class="Nickname" type="text" name="Nickname"  placeholder="your Nickname..." required>
+        <div class="firstandlastname">
+            <input type="text" name="firstname" placeholder="your firstname..." required>
+            <input type="text" name="lastname" placeholder="your lastname..." required>
+        </div>
+        <div class="genderandemail">
+            <select name="gender" required>=
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <input type="email" name="email" placeholder="your email..." required />
+        </div>
+        <div class="password">
+            <input type="password" name="password" placeholder="your password..." required />
+            <input type="password" name="confirm_password" placeholder="confirm_password..." required />
+        </div>
+        <button id="signup" class="signup" type="submit">sign-up</button>
+        <button id="signin" class="signin" type="submit">sing-in</button>
+      </div>
+   </div>
+`
+
 const pagehome = `
   <header>
         <div class="contentofthebar">

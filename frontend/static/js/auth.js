@@ -3,6 +3,7 @@ export async function isLogged() {
         const rep = await fetch("/auth")
 
         const data = await rep.json()
+        
 
         if (data.message == "able") {
             return true

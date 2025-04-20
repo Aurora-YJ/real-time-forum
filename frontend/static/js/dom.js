@@ -1,0 +1,81 @@
+const pagehome = `
+  <header>
+        <div class="contentofthebar">
+            <div class="title" > <a href="/">Wellcome</a></div>
+
+            <div class="rightbar">  
+                <div class="forhone">
+                    <a href="/">
+                        <i class="fa-solid fa-house"></i>
+                        Home
+                    </a>
+                </div>
+                <div class="forbuttons">
+                        <button class="login" id="login">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            login
+                        </button>
+                        <button class="register" id="register">
+                            <i class="fa-solid fa-user-plus"></i>
+                            register
+                        </button>
+               
+                </div>                
+               
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <section>
+            
+            <p class="ppp">  <i class="fa-solid fa-bell"></i>you chats</p> 
+            <div class="mesgfrom">
+                <button>
+                    <i class="fa-regular fa-message"></i>  youssef    
+                </button>
+            </div>
+        </section>
+
+        <article>
+            <div class="creat-post">
+            
+                    <button id="AddPost" class="Add_Post" ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
+              
+            </div>
+            <div class="potess">
+                <div class="post">
+                   <div class="userbar">
+                       <ul>
+                            <div class="imageandname">
+                                <li ><i class="fa-solid fa-user"></i></i></li>
+                                <li >youssef</li>
+                            </div>
+                            <li class="creatdate"> creat at: 2000/02/01</li>
+                       </ul>
+                    </div>
+                    <div class="content">
+                        <h3>hello</h3>
+                        <p>sdafyugfvoydusvhayoufdgzvyadhfvyuzdyuzsvhb
+                            dyfvyuaGFEWYCAsdafyugfvoydusvhayoufdgzvyadhfvyuzdyu
+                            zsvhbdyfvyuaGFEWYCAsdafyugfvoydusvhayoufdgzvyadhfvyuzdyuzsvhbdyfvyuaGFEWYCA</p>
+                    </div>
+                    <div class="catigoryandcomment">
+                        <div class="category">
+                            <p >categorys: <span style="color: red;">sport , code</span></p>
+                        </div>
+                        <div class="comment">
+                            <span>2</span>   
+                            <button>
+                                <i class="fa-solid fa-comments"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </article>
+    </main>
+
+` 

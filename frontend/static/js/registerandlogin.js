@@ -1,5 +1,5 @@
 import { registerdom , logindom } from "./dom.js"
-import { registerInfo } from "./api.js"
+import { registerInfo , LoginInfo } from "./api.js"
 export function registerandlogin() {
     document.getElementById("main-style").href = "frontend/static/css/registerandlogin.css";
     document.body.innerHTML = ""
@@ -9,7 +9,7 @@ export function registerandlogin() {
     reg.style.background = "green"
     reg.addEventListener("click", debounce(function(){
         registerInfo()
-    }) , 1000)
+    }) , 500)
 
     log.addEventListener("click", debounce(function(){
        login()
@@ -37,7 +37,6 @@ function login() {
     const reg = document.getElementById("signup")
     reg.addEventListener("click", debounce(function(){
         registerandlogin()
-    }) , 1000)
-
-   
+    }) , 500)
+    LoginInfo()
 }

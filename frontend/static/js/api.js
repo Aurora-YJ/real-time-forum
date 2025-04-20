@@ -30,11 +30,12 @@ export function registerInfo() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nickname, firstname, lastname, gender, email, password })
+                body: JSON.stringify({ nickname, firstname, lastname, gender, email, password , confirmPassword})
             });
 
             if (!response.ok) {
                 showError("Failed to register. Please try again.");
+                return
             }
 
          
@@ -42,9 +43,50 @@ export function registerInfo() {
           
             console.error(error);
         }
-    }, 500));
+    }, 500))
 }
+ 
+export function LoginInfo() {
+    const log = document.getElementById("signin")
+    log.addEventListener('click', debounce(async function (e) {
+        e.preventDefault()
 
+        const nameOrEmail = document.querySelector('[name="Nicknameoremail"]')
+        const password = document.querySelector('[name="password"]').value;
+        const confirmPassword = document.querySelector('[name="confirm_password"]').value;
+
+        if (!nameOrEmail || !password || !confirmPassword) {
+            showError("Please fill in all fields before continuing...");
+            return;
+        }
+        if (password !== confirmPassword) {
+            showError("Passwords do not match.");
+            return;
+        }
+
+        try {
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nameOrEmail, password , confirmPassword })
+            });
+            console.log("hi");
+            
+            if (!response.ok) {
+                showError("Failed to register. Please try again.");
+                return
+            }
+
+         
+        } catch (error) {
+          
+            console.error(error);
+        }
+
+    }), 500)
+}
 
 function showError(message) {
     const errorDiv = document.getElementById("errorreglog");

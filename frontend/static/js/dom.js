@@ -26,6 +26,9 @@ export const registerdom = `
    </div>
 `
 export const logindom = `
+<div class="errorInRegOrLog" id="errorreglog"> 
+  gggggffffffffffffff
+</div> 
  <div id="continer">
         <div class="registering">
           <input class="Nickname" type="text" name="Nicknameoremail"  placeholder="your Nickname or email.." required>

@@ -16,6 +16,7 @@ type User struct {
 	Lastname    string `json:"lastname"`
 	Gender      string `json:"gender"`
 	Email       string `json:"email"`
+	Age       string `json:"age"`
 	Password    string `json:"password"`
 	ConPassword string `json:"confirmPassword"`
 }
@@ -35,7 +36,7 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 	
-	if utils.ContainsEmpty(user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Password, user.ConPassword) {
+	if utils.ContainsEmpty(user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password, user.ConPassword) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}
@@ -50,7 +51,7 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
    
-	err =  models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Password, user.ConPassword)
+	err =  models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password, user.ConPassword)
 	if err != nil {
 		fmt.Println(err)
 		return

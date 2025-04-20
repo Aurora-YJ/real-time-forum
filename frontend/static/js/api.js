@@ -10,11 +10,17 @@ export function registerInfo() {
         const lastname = document.querySelector('[name="lastname"]').value;
         const gender = document.querySelector('[name="gender"]').value;
         const email = document.querySelector('[name="email"]').value;
+        const age = document.querySelector('[name="age"]').value;
         const password = document.querySelector('[name="password"]').value;
         const confirmPassword = document.querySelector('[name="confirm_password"]').value;
 
-        if (!nickname || !firstname || !lastname || !gender || !email || !password || !confirmPassword) {
+        if (!nickname || !firstname || !lastname || !gender || !email || !password || !confirmPassword || !age) {
             showError("Please fill in all fields before continuing...");
+            return;
+        }
+
+        if (isNaN(age) || age < 17) {
+            showError("Your age is not allowed...");
             return;
         }
 
@@ -35,7 +41,7 @@ export function registerInfo() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nickname, firstname, lastname, gender, email, password, confirmPassword })
+                body: JSON.stringify({ nickname, firstname, lastname, gender, email, age, password, confirmPassword })
             });
 
             if (!response.ok) {

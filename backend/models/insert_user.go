@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func InsertUser(w http.ResponseWriter, r *http.Request, db *sql.DB, Nickname, Firstname, Lastname, Gender, Email, Password, ConPassword string) error {
+func InsertUser(w http.ResponseWriter, r *http.Request, db *sql.DB, Nickname, Firstname, Lastname, Gender, Email, Age, Password, ConPassword string) error {
 	query := `
 	INSERT INTO Users (
 		Nickname,
@@ -14,8 +14,9 @@ func InsertUser(w http.ResponseWriter, r *http.Request, db *sql.DB, Nickname, Fi
 		LastName,
 		Gender,
 		Email,
+		Age,
 		PassWord,
-		ConfirmPassword) VALUES (?, ?, ?, ?, ?, ?, ?);
+		ConfirmPassword) VALUES (?, ?, ?, ?, ?, ?,?, ?);
 `
 
 	_, err := db.Exec(
@@ -25,6 +26,7 @@ func InsertUser(w http.ResponseWriter, r *http.Request, db *sql.DB, Nickname, Fi
 		Lastname,
 		Gender,
 		Email,
+		Age,
 		Password,
 		ConPassword,
 	)

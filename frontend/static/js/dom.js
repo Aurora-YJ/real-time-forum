@@ -17,6 +17,7 @@ export const registerdom = `
             </select>
             <input type="email" name="email" placeholder="your email..." required />
         </div>
+        <input class="ageinput" type="text" name="age" placeholder="your age..." required />
         <div class="password">
             <input type="password" name="password" placeholder="your password..." required />
             <input type="password" name="confirm_password" placeholder="confirm_password..." required />

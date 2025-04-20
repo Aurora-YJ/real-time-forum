@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS Users (
     LastName  TEXT NOT NULL,
     Gender TEXT CHECK(Gender IN ('Male', 'Female')),
     Email VARCHAR(50) NOT NULL UNIQUE,
+    Age VARCHAR(2) NOT NULL,
     PassWord CHAR(30) NOT NULL,
     ConfirmPassword CHAR(30) NOT NULL,
     DateCreation DATE DEFAULT CURRENT_TIMESTAMP,

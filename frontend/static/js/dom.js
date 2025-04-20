@@ -1,5 +1,8 @@
 export const registerdom = `
- <div id="continer">
+<div class="errorInRegOrLog" id="errorreglog"> 
+  gggggffffffffffffff
+</div> 
+<div id="continer">
       <div class="registering">
         <input class="Nickname" type="text" name="Nickname"  placeholder="your Nickname..." required>
         <div class="firstandlastname">
@@ -22,8 +25,20 @@ export const registerdom = `
       </div>
    </div>
 `
-
-const pagehome = `
+export const logindom = `
+ <div id="continer">
+        <div class="registering">
+          <input class="Nickname" type="text" name="Nicknameoremail"  placeholder="your Nickname or email.." required>
+          <div class="passwordlog">
+              <input type="password" name="password" placeholder="your password..." required />
+              <input type="password" name="confirm_password" placeholder="confirm_password..." required />
+          </div>
+          <button id="signup" class="signup" type="submit">sign-up</button>
+          <button id="signin" class="signin" type="submit">sing-in</button>
+        </div>
+    </div>
+`
+export const pagehome = `
   <header>
         <div class="contentofthebar">
             <div class="title" > <a href="/">Wellcome</a></div>

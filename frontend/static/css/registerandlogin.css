@@ -1,6 +1,22 @@
 body {
-    background-image: url('logreg.jpg');
-    background-size: cover;        
-    background-repeat: no-repeat;  
-    background-position: center;  
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#continer {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    width: 50%;
+    height: 600px;
+    background-image: url("imagereglog.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
 }

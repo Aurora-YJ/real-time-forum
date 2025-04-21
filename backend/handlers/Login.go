@@ -3,42 +3,50 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"net/http"
+
+	"forum/backend/controllers"
+	"forum/backend/models"
+	"forum/utils"
 )
 
 type Userlog struct {
-	Nicknameoremail  string `json:"nameOrEmail"`
-	Password    string `json:"password"`
-	ConPassword string `json:"confpassword"`
+	Nicknameoremail string `json:"nameOrEmail"`
+	Password        string `json:"password"`
+	ConPassword     string `json:"confpassword"`
 }
 
 func Login(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if r.Method != http.MethodPost {
-		// http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		controllers.Response("Method Not Allowed...", 405, w)
 		return
 	}
-
 
 	// Parse JSON from request body
 	var userlog Userlog
 	err := json.NewDecoder(r.Body).Decode(&userlog)
 	if err != nil {
-		fmt.Println(err)
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-
+		controllers.Response("Invalid JSON...", 40., w)
 		return
 	}
-	fmt.Println("hiiiiiiiiii")
-	// Just for testing: print the received data
-	fmt.Println("<----------------------------------->")
-	fmt.Println("<----------------------------------->")
-	fmt.Println("Nickname:", userlog.Nicknameoremail)
-	
-	fmt.Println("Password:", userlog.Password)
-	fmt.Println("ConPassword:", userlog.ConPassword)
+	if utils.ContainsEmpty(userlog.Nicknameoremail, userlog.Password, userlog.ConPassword) {
+		controllers.Response("Please fill in all fields before continuing...", 405, w)
+		return
+	}
 
-	// Optionally send a success response
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("User registered successfully!"))
+	if userlog.Password != userlog.ConPassword {
+		controllers.Response("Passwords do not match...", 405, w)
+		return
+	}
+
+	status , err := models.UserExists(userlog.Nicknameoremail, userlog.Password , db) 
+	if err != nil {
+
+	}
+
+	if status {
+		
+	}
+
+	controllers.Response("you registered successfully! :)", 200, w)
 }

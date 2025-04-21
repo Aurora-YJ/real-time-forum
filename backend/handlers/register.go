@@ -25,7 +25,7 @@ type User struct {
 
 func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if r.Method != http.MethodPost {
-		// http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		controllers.Response("Method Not Allowed...", 405, w)
 		return
 	}
 
@@ -33,7 +33,7 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		// http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		controllers.Response("Invalid JSON...", 40., w)
 		return
 	}
 

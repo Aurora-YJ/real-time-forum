@@ -48,8 +48,9 @@ export function registerInfo() {
             if (!response.ok) {
                 showError("Failed to register. Please try again.")
                 return;
-            }           
+            }        
             const data = await response.json()
+            
 
         } catch (error) {
 

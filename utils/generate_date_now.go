@@ -3,7 +3,6 @@ package utils
 import "time"
 
 func GenerateDateNow() time.Time {
-	
 	return time.Now().UTC()
 }
 

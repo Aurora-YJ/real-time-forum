@@ -31,7 +31,6 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	// Parse JSON from request body
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -86,5 +85,7 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			fmt.Println("error database--->:",err)
 		}
 	}
+
+	http.SetCookie(w, &http.Cookie{Name: "Token" , Value: Token , HttpOnly: true, Secure: true})
 	controllers.Response("you registered successfully! :)", 200, w)
 }

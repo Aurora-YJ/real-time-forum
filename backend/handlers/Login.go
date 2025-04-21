@@ -40,12 +40,28 @@ func Login(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	msg , code, err := models.UserExists(userlog.Nicknameoremail, userlog.Password, db)
+	msg, code, err := models.UserExists(userlog.Nicknameoremail, userlog.Password, db)
 	if err != nil {
 		controllers.Response("error in the server...", 500, w)
 		fmt.Println("error to login---->", err)
 		return
 	}
+
+	Token, err := utils.GenerateToken()
+	if err != nil {
+		controllers.Response("error in the server...", 500, w)
+		fmt.Println("error to generate token..<<--")
+		return
+	}
+
+	err = models.InserTokenLog(Token, userlog.Nicknameoremail, db)
+	if err != nil {
+		controllers.Response("error in the server...", 500, w)
+		fmt.Println("error to login to db---->", err)
+		return
+	}
+
+	http.SetCookie(w , &http.Cookie{Name: "Token", Value: Token, HttpOnly: true, Secure: true})
 
 	controllers.Response(msg, code, w)
 }

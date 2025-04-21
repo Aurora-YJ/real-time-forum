@@ -44,7 +44,7 @@ export const logindom = `
         </div>
     </div>
 `
-export const pagehome = `
+export const home = `
   <header>
         <div class="contentofthebar">
             <div class="title" > <a href="/">Wellcome</a></div>

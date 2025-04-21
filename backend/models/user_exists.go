@@ -46,12 +46,14 @@ func UserExists(EmailOrnackname, password string, db *sql.DB) (string, int, erro
 			return "", 500, err
 		}
 		if (!help) || DatabasePassword == "" {
+			fmt.Println("hiiiiiiiiiii")
 			return "You have to register...", 401, nil
 		}
 
 	}
 
 	if !checkpassword(DatabasePassword, password) {
+		
 		return "You have to register...", 401, nil
 	}
 	return "you loged successfully! :)", 200, nil

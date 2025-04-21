@@ -1,4 +1,5 @@
 
+import { pagehome } from "./pagehome.js"
 export function registerInfo() {
     const regBtn = document.getElementById('signup');
 
@@ -50,7 +51,7 @@ export function registerInfo() {
                 return;
             }        
             const data = await response.json()
-            
+            pagehome()
 
         } catch (error) {
 
@@ -103,7 +104,7 @@ export function LoginInfo() {
 
             const data = response.json()
             console.log(data.message)
-
+            pagehome()
         } catch (error) {
             console.error(error);
         }

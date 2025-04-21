@@ -65,10 +65,17 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password,
 		user.ConPassword, Token, Expired.Format(time.DateTime))
 	if err != nil {
-		str := utils.Checkerror_Database(err)
-		return
+		errorr := utils.Checkerror_Database(err)
+		if utils.Check_string(errorr , "Email") {
+			controllers.Response("This email already exists...", 405, w)
+			return
+		} else if utils.Check_string(errorr , "Nickname") {
+			controllers.Response("This Nickname already exists...", 405, w)
+			return
+		} else {
+			controllers.Response("We are experiencing some problems, we apologize :(", 500, w)
+			fmt.Println("error database--->:",err)
+		}
 	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("User registered successfully!"))
+	controllers.Response("you registered successfully! :)", 200, w)
 }

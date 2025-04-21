@@ -46,12 +46,13 @@ export function registerInfo() {
             });
 
             if (!response.ok) {
-                showError("Failed to register. Please try again.");
+                showError("Failed to register. Please try again.")
                 return;
-            }
+            }           
+            const data = await response.json()
 
         } catch (error) {
-            console.log("hhhhhhhhhhhhhh");
+
             console.error(error);
         }
     });

@@ -101,6 +101,9 @@ export function LoginInfo() {
                 return;
             }
 
+            const data = response.json()
+            console.log(data.message)
+
         } catch (error) {
             console.error(error);
         }

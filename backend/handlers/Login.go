@@ -3,6 +3,7 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"forum/backend/controllers"
@@ -39,14 +40,12 @@ func Login(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	status , err := models.UserExists(userlog.Nicknameoremail, userlog.Password , db) 
+	msg , code, err := models.UserExists(userlog.Nicknameoremail, userlog.Password, db)
 	if err != nil {
-
+		controllers.Response("error in the server...", 500, w)
+		fmt.Println("error to login---->", err)
+		return
 	}
 
-	if status {
-		
-	}
-
-	controllers.Response("you registered successfully! :)", 200, w)
+	controllers.Response(msg, code, w)
 }

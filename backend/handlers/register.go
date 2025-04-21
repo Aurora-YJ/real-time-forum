@@ -10,6 +10,8 @@ import (
 	"forum/backend/controllers"
 	"forum/backend/models"
 	"forum/utils"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -62,8 +64,15 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	DateCreation := utils.GenerateDateNow()
 	Expired := utils.GenerateExpiredTime(DateCreation)
 
-	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password,
-		user.ConPassword, Token, Expired.Format(time.DateTime))
+	pw, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		controllers.Response("We are experiencing some problems, we apologize :(", 500, w)
+		return
+	}
+	hashedPassword := string(pw)
+
+	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, hashedPassword,
+		hashedPassword, Token, Expired.Format(time.DateTime))
 	if err != nil {
 		errorr := utils.Checkerror_Database(err)
 		if utils.Check_string(errorr , "Email") {

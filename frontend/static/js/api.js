@@ -19,7 +19,8 @@ export function registerInfo() {
             return;
         }
 
-        if (isNaN(age) || age < 17) {
+        const ageNum = Number(age);
+        if (isNaN(ageNum) || ageNum < 18) {
             showError("Your age is not allowed...");
             return;
         }

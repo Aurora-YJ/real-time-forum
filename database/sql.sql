@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Users (
     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nickname TEXT NOT NULL,
+    Nickname TEXT NOT NULL UNIQUE,
     FirstName  TEXT NOT NULL,
     LastName  TEXT NOT NULL,
     Gender TEXT CHECK(Gender IN ('Male', 'Female')),

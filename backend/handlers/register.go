@@ -4,10 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"time"
+
 	"forum/backend/controllers"
 	"forum/backend/models"
 	"forum/utils"
-	"net/http"
 )
 
 type User struct {
@@ -16,13 +18,12 @@ type User struct {
 	Lastname    string `json:"lastname"`
 	Gender      string `json:"gender"`
 	Email       string `json:"email"`
-	Age       string `json:"age"`
+	Age         string `json:"age"`
 	Password    string `json:"password"`
 	ConPassword string `json:"confirmPassword"`
 }
 
 func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-	
 	if r.Method != http.MethodPost {
 		// http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return
@@ -35,37 +36,38 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		// http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-	
+
 	if utils.ContainsEmpty(user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password, user.ConPassword) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}
-	
+
 	if user.Password != user.ConPassword {
 		controllers.Response("Invalid email format...", 405, w)
 		return
 	}
-	
+
 	if !utils.Checkemail(user.Email) {
 		controllers.Response("Invalid email format...", 405, w)
 		return
 	}
-   
-	err =  models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password, user.ConPassword)
+
+	Token, err := utils.GenerateToken()
 	if err != nil {
-		fmt.Println(err)
+		controllers.Response("error in the server...", 500, w)
+		fmt.Println("error to generate token..<<--")
 		return
 	}
-    fmt.Println("kkkkkkkkkkkkkkk")
-	// fmt.Println("<----------------------------------->")
-	// fmt.Println("<----------------------------------->")
-	// fmt.Println("Nickname:", user.Nickname)
-	// fmt.Println("First Name:", user.Firstname)
-	// fmt.Println("Last Name:", user.Lastname)
-	// fmt.Println("Gender:", user.Gender)
-	// fmt.Println("Email:", user.Email)
-	// fmt.Println("Password:", user.Password)
-	// fmt.Println("ConPassword:", user.ConPassword)
+
+	DateCreation := utils.GenerateDateNow()
+	Expired := utils.GenerateExpiredTime(DateCreation)
+
+	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password,
+		user.ConPassword, Token, Expired.Format(time.DateTime))
+	if err != nil {
+		str := utils.Checkerror_Database(err)
+		return
+	}
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("User registered successfully!"))

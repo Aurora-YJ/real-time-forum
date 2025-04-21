@@ -10,6 +10,4 @@ require (
 	golang.org/x/crypto v0.35.0
 )
 
-require (
-	github.com/gofrs/uuid/v5 v5.3.1 // indirect
-)
+require github.com/gofrs/uuid v4.4.0+incompatible // indirect

@@ -45,14 +45,10 @@ export const logindom = `
     </div>
 `
 
-export const creatpost = `
-        <div id="creatpost" class="creatpost">
+export const creatpostin = `
             <input id="titleID" type="text" placeholder="your title..." maxlength="50">
-            <p id="errortitle" style="color: red; display: none;   font-size: 15px;"></p>
             <textarea id="contentID" maxlength="200" placeholder="your content..."></textarea>
-            <p id="errorcontent" style="color: red; display: none;   font-size: 15px;"></p>
             <button id="buttonAddPost" type="submit">ADD</button>
-        </div>
 `
 export const home = `
   <header>
@@ -67,7 +63,7 @@ export const home = `
                     </a>
                 </div>
                 <div class="forbuttons">
-                        <button class="login" id="login">
+                        <button class="logout" id="logout">
                             <i class="fa-solid fa-right-to-bracket"></i>
                             logout
                         </button>
@@ -93,16 +89,10 @@ export const home = `
         <article>
             <div class="creat-post">
             
-                    <button id="AddPost" class="Add_Post" ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
+                    <button id="AddPostbtn" class="Add_Post" type="button"  ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
               
             </div>
-            <div id="creatpost" class="creatpost">
-                <input id="titleID" type="text" placeholder="your title..." maxlength="50">
-                <p id="errortitle" style="color: red; display: none;   font-size: 15px;"></p>
-                <textarea id="contentID" maxlength="200" placeholder="your content..."></textarea>
-                <p id="errorcontent" style="color: red; display: none;   font-size: 15px;"></p>
-                <button id="buttonAddPost" type="submit">ADD</button>
-            </div>
+           
             <div class="potess">
                 <div class="post">
                    <div class="userbar">

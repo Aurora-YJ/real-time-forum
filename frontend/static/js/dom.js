@@ -69,11 +69,7 @@ export const home = `
                 <div class="forbuttons">
                         <button class="login" id="login">
                             <i class="fa-solid fa-right-to-bracket"></i>
-                            login
-                        </button>
-                        <button class="register" id="register">
-                            <i class="fa-solid fa-user-plus"></i>
-                            register
+                            logout
                         </button>
                
                 </div>                
@@ -99,6 +95,13 @@ export const home = `
             
                     <button id="AddPost" class="Add_Post" ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
               
+            </div>
+            <div id="creatpost" class="creatpost">
+                <input id="titleID" type="text" placeholder="your title..." maxlength="50">
+                <p id="errortitle" style="color: red; display: none;   font-size: 15px;"></p>
+                <textarea id="contentID" maxlength="200" placeholder="your content..."></textarea>
+                <p id="errorcontent" style="color: red; display: none;   font-size: 15px;"></p>
+                <button id="buttonAddPost" type="submit">ADD</button>
             </div>
             <div class="potess">
                 <div class="post">

@@ -4,7 +4,7 @@ export async function isLogged() {
 
         const data = await rep.json()
         
-
+        console.log(data.message)
         if (data.message == "able") {
             return true
         } else {

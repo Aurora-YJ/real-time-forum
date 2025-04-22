@@ -314,3 +314,75 @@ main article .potess .post .catigoryandcomment .comment button {
 }
 
 
+   
+#creatpost {
+    width: 400px;
+    height: 220px;
+    background-color: #DCD7C9;
+    margin-left: 100px;
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+     overflow: auto;
+    border-radius: 10px;
+}
+
+#creatpost #titleID {
+    margin-top: 3%;
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 15px;
+    border: #f1f1f1;
+    transition: border 0.3s;
+}
+
+#creatpost #contentID {
+    width: 80%;
+    height: 40%;
+    border-radius: 15PX;
+    margin-top: 10px;
+    margin-left: 30px;
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    border: #f1f1f1;
+    resize: none;
+    outline: none;
+}
+
+#creatpost #contentID::-webkit-scrollbar {
+    width: 6px;
+}
+
+#creatpost #contentID::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#creatpost #contentID::-webkit-scrollbar-thumb {
+    background: #005F20;
+    border-radius: 10px;
+}
+
+#creatpost #contentID::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+
+#creatpost button {
+    background-color: var(--btn2);
+    margin-top: 10px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#creatpost button:hover {
+    background-color: #005F20;
+}

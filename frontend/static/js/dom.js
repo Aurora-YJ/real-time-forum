@@ -44,6 +44,16 @@ export const logindom = `
         </div>
     </div>
 `
+
+export const creatpost = `
+        <div id="creatpost" class="creatpost">
+            <input id="titleID" type="text" placeholder="your title..." maxlength="50">
+            <p id="errortitle" style="color: red; display: none;   font-size: 15px;"></p>
+            <textarea id="contentID" maxlength="200" placeholder="your content..."></textarea>
+            <p id="errorcontent" style="color: red; display: none;   font-size: 15px;"></p>
+            <button id="buttonAddPost" type="submit">ADD</button>
+        </div>
+`
 export const home = `
   <header>
         <div class="contentofthebar">

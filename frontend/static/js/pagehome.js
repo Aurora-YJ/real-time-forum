@@ -6,7 +6,7 @@ export function pagehome() {
     const pc = document.getElementById("AddPostbtn")
     pc.addEventListener("click", (e) => {
         if (e) {     
-                         
+            document.getElementById('creatpost').innerHTML = creatpostin
         }
     })
 }

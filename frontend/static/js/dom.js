@@ -87,7 +87,7 @@ export const home = `
         </section>
 
         <article>
-            <div class="creat-post">
+            <div class="creat-post" id="creatpost">
             
                     <button id="AddPostbtn" class="Add_Post" type="button"  ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
               

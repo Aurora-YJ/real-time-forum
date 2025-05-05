@@ -175,8 +175,9 @@ export function fetchpost() {
         } catch (error) {
             console.error(error);
         }
-        
-        titleInput.value = "";
-        contentInput.value = "";
+        const formDiv = document.getElementById("creatpostt");
+        if (formDiv) {
+            formDiv.remove();
+        }
     });
 }

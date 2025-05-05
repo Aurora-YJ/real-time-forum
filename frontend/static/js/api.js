@@ -130,3 +130,71 @@ function isValidEmail(email) {
 function isLikelyEmail(str) {
     return /@/.test(str) && /\./.test(str);
 }
+export function fetchpost() {
+    const Submitpost = document.getElementById("Submitpost");
+
+    if (!Submitpost) {
+        console.error("!!!Submitpost");
+        return;
+    }
+
+    Submitpost.addEventListener("click", async function () {
+        const titleInput = document.getElementById("titleID");
+        const contentInput = document.getElementById("contentID");
+
+        if (!titleInput || !contentInput) {
+            showError("Please fill in all fields before continuing...");
+            return;
+        }
+
+        const title = titleInput.value.trim();
+        const content = contentInput.value.trim();
+
+        if (!title || !content) {
+           // showError("Please fill in all fields before continuing...");
+            return;
+        }
+
+        // يمكن إرسال البيانات هنا باستخدام fetch إذا أردت (إليك مثالاً)
+        /*
+        await fetch("/api/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, content })
+        });
+
+        ///////////////////////////////////////////////////////
+         try {
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nameOrEmail, password , confpassword})
+            });
+
+
+            if (!response.ok) {
+                showError("Failed to login. Please try again.");
+                return;
+            }
+
+            const data = response.json()
+            console.log(data.message)
+            pagehome()
+        } catch (error) {
+            console.error(error);
+        }
+
+        */
+
+        console.log("Post Title:", title);
+        console.log("Post Content:", content);
+
+        // مسح الحقول بعد الإرسال
+        titleInput.value = "";
+        contentInput.value = "";
+    });
+}

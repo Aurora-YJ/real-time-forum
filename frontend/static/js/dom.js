@@ -45,11 +45,7 @@ export const logindom = `
     </div>
 `
 
-export const creatpostin = `
-            <input id="titleID" type="text" placeholder="your title..." maxlength="50">
-            <textarea id="contentID" maxlength="200" placeholder="your content..."></textarea>
-            <button id="buttonAddPost" type="submit">ADD</button>
-`
+
 export const home = `
   <header>
         <div class="contentofthebar">
@@ -87,7 +83,7 @@ export const home = `
         </section>
 
         <article>
-            <div class="creat-post" id="creatpost">
+            <div class="creatpostpt" id="creatpost">
             
                     <button id="AddPostbtn" class="Add_Post" type="button"  ><i class="fa-duotone fa-solid fa-plus fa-rotate-90"></i> Add_Post</button>
               

@@ -155,45 +155,27 @@ export function fetchpost() {
             return;
         }
 
-        // يمكن إرسال البيانات هنا باستخدام fetch إذا أردت (إليك مثالاً)
-        /*
-        await fetch("/api/posts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ title, content })
-        });
-
-        ///////////////////////////////////////////////////////
-         try {
-            const response = await fetch("/login", {
+        try {
+            const response = await fetch("/creatpost", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ nameOrEmail, password , confpassword})
+                body: JSON.stringify({ title, content })
             });
 
 
             if (!response.ok) {
-                showError("Failed to login. Please try again.");
+                console.log("errrrrrrrrrrrrro")
                 return;
             }
 
-            const data = response.json()
+            const data = await response.json()
             console.log(data.message)
-            pagehome()
         } catch (error) {
             console.error(error);
         }
-
-        */
-
-        console.log("Post Title:", title);
-        console.log("Post Content:", content);
-
-        // مسح الحقول بعد الإرسال
+        
         titleInput.value = "";
         contentInput.value = "";
     });

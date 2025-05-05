@@ -8,6 +8,7 @@ import (
 
 	"forum/backend/controllers"
 	"forum/backend/models"
+
 	"forum/utils"
 )
 
@@ -61,7 +62,7 @@ func Login(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	http.SetCookie(w , &http.Cookie{Name: "Token", Value: Token, HttpOnly: true, Secure: true})
+	http.SetCookie(w, &http.Cookie{Name: "Token", Value: Token, HttpOnly: true, Secure: true})
 
 	controllers.Response(msg, code, w)
 }

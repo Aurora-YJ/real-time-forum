@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"forum/backend/controllers"
 	"forum/backend/handlers"
+	"forum/backend/handlers/posts"
 	"forum/middleware"
 	"net/http"
 )
@@ -23,6 +24,10 @@ func Handle_routers(db *sql.DB) {
 	http.HandleFunc("/auth", middleware.CheckSession(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			controllers.Auth(w, r)
+		}), db))
+	http.HandleFunc("/creatpost", middleware.CheckSession(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			posts.FetchPosts(w,r,db)
 		}), db))
 	http.HandleFunc("/frontend/static/css/", handlers.HandleStatic)
 	http.HandleFunc("/frontend/static/js/", handlers.HandleStatic)

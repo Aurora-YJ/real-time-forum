@@ -130,7 +130,7 @@ function isValidEmail(email) {
 function isLikelyEmail(str) {
     return /@/.test(str) && /\./.test(str);
 }
-export function fetchpost() {
+export async function FetchCreatPost() {
     const Submitpost = document.getElementById("Submitpost");
 
     if (!Submitpost) {
@@ -180,4 +180,18 @@ export function fetchpost() {
             formDiv.remove();
         }
     });
+}
+
+export async function FetchPost() {
+    try {
+        const rep = await fetch("/fetchposts")
+        if (rep.ok) {
+            throw error
+        }
+        const repdata = await rep.json()
+        console.log(repdata);
+        
+    } catch {
+        console.error(error);
+    }
 }

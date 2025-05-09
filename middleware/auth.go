@@ -25,11 +25,11 @@ func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		if time.Now().UTC().After(expired.UTC()) {
-			db.Exec("UPDATE Users SET Session =? WHERE ID = ?", "", id)
-			controllers.Response("unable", 200, w)
-			return
-		}
+		// if time.Now().UTC().After(expired.UTC()) {
+		// 	db.Exec("UPDATE Users SET Session =? WHERE ID = ?", "", id)
+		// 	controllers.Response("unable", 200, w)
+		// 	return
+		// }
 		ctx := r.Context()
 		ctx = context.WithValue(ctx, "ID", id)
 		ctx = context.WithValue(ctx, "Nickname", nickname)

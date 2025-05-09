@@ -1,12 +1,13 @@
 import { home } from "./dom.js";
-import { fetchpost } from "./api.js";
+import { FetchCreatPost } from "./api.js"
+import { FetchPost } from "./api.js"
 export function pagehome() {
     document.body.innerHTML = home; 
     document.getElementById("main-style").href = "frontend/static/css/index.css";
-    
+
     const addPostBtn = document.getElementById("AddPostbtn");
     addPostBtn.addEventListener("click", creatpostinput);
-
+    FetchPost()
 }
 
 function creatpostinput() {
@@ -28,5 +29,5 @@ function creatpostinput() {
     deletePostBtn.addEventListener("click", function() {
         divcreatpost.remove(); 
     });
-    fetchpost()
+    FetchCreatPost()
 }

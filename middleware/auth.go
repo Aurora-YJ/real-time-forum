@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"forum/backend/controllers"
 	"net/http"
 	"time"
@@ -12,9 +13,11 @@ func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("Token")
 		if err != nil {
+			fmt.Println("hi hhhhhhhh")
 			controllers.Response("unable", 200, w)
 			return
 		}
+		fmt.Println("tocken",cookie.Value)
 		var id int
 		var nickname string
 		var expired time.Time
@@ -25,11 +28,13 @@ func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		// if time.Now().UTC().After(expired.UTC()) {
-		// 	db.Exec("UPDATE Users SET Session =? WHERE ID = ?", "", id)
-		// 	controllers.Response("unable", 200, w)
-		// 	return
-		// }
+		
+		if time.Now().UTC().After(expired.UTC()) {
+			db.Exec("UPDATE Users SET Session =? WHERE ID = ?", "", id)
+			controllers.Response("unable", 200, w)
+			return
+		}
+
 		ctx := r.Context()
 		ctx = context.WithValue(ctx, "ID", id)
 		ctx = context.WithValue(ctx, "Nickname", nickname)

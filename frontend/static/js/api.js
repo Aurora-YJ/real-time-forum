@@ -182,16 +182,3 @@ export async function FetchCreatPost() {
     });
 }
 
-export async function FetchPost() {
-    try {
-        const rep = await fetch("/fetchposts")
-        if (rep.ok) {
-            throw error
-        }
-        const repdata = await rep.json()
-        console.log(repdata);
-        
-    } catch {
-        console.error(error);
-    }
-}

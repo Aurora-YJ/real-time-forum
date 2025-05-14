@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 )
 
@@ -15,24 +16,20 @@ type Post struct {
 	Dislikes     int
 	CountComment int
 	Comments     []Comment
-	Status string
-}
-
-type Comment struct {
-	Content string
+	Status       string
 }
 
 func GetPosts(db *sql.DB) ([]Post, error) {
 	var posts []Post
 
 	query := `
-	    SELCTE
+	    SELECT
 		    P.ID,
 		    P.Title,
 		    P.Content,
 		    p.DateCreation,
-		    U.Nickname,
-		FROM Posts
+		    U.Nickname
+		FROM Posts P
 		JOIN Users U ON U.ID = P.ID_User
 	`
 	rows, err := db.Query(query)
@@ -43,14 +40,18 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 
 	for rows.Next() {
 		var p Post
-		err := rows.Scan(&p.ID, &p.Title, &p.Content, &p.CreataAt)
+		err := rows.Scan(&p.ID, &p.Title, &p.Content, &p.CreataAt, &p.Creator)
 		if err != nil {
 			return nil, err
 		}
-		// comments, err := FetchComment(p.ID, db)
-
+		comments, err := FetchComment(p.ID, db)
+		if err != nil {
+			fmt.Println("here the error", err)
+		}
+		p.Comments = comments
 
 		// Likes , Dislikes , err := FetchLikes
+		posts = append(posts, p)
 	}
 	return posts, nil
 }

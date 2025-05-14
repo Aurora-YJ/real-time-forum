@@ -2,6 +2,7 @@ package posts
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"forum/backend/controllers"
 	"forum/backend/models"
@@ -16,9 +17,14 @@ func FetchPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	posts, err := models.GetPosts(db)
 	if err != nil {
-		fmt.Println("herehhhhh", err)
+		fmt.Println("Error fetching posts:", err)
+		controllers.Response("Internal Server Error", 500, w)
 		return
 	}
 
-	fmt.Println(posts)
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(posts)
+
 }

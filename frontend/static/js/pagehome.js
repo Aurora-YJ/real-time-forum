@@ -10,14 +10,13 @@ export async function pagehome() {
     try {
         const rep = await fetch("/fetchposts", {
             method: "GET",
-            credentials: "include"
         })
-        if (rep.ok) {
+        if (!rep.ok) {
             console.log("ERROR TO GET POSTS")
         }
         const repdata = await rep.json()
         console.log(repdata);
-
+        
     } catch (error) {
         console.error(error);
     }

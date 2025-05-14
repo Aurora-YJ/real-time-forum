@@ -2,7 +2,6 @@ package posts
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"forum/backend/controllers"
 	"forum/backend/models"
@@ -22,9 +21,6 @@ func FetchPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
-
-	json.NewEncoder(w).Encode(posts)
+	controllers.Response(posts, http.StatusAccepted, w)
 
 }

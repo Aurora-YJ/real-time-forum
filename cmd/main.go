@@ -6,8 +6,6 @@ import (
 	"forum/database"
 	"log"
 	"net/http"
-	"os"
-	"os/signal"
 )
 
 func main() {
@@ -16,26 +14,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig, os.Interrupt)
-
+	defer db.Close()
 	routes.Handle_routers(db)
 
 	fmt.Println("your serve on : http://localhost:8080")
-
-	go func() {
-		if err := http.ListenAndServe(":8080", nil); err != nil {
-			log.Fatal("server error:", err)
-		}
-	}()
-
-	<-sig
-
-	err = db.Close()
-	if err != nil {
-		log.Println("\nerror to close database", err)
-	} else {
-		fmt.Println("\ndatabase is closed (:")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal("server error:", err)
 	}
 
 }

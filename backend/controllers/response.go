@@ -5,11 +5,11 @@ import (
 	"net/http"
 )
 
-func Response(msg string, code int, w http.ResponseWriter) {
+func Response(msg any, code int, w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	Response := struct {
-		Message string `json:"message"`
+		Message any `json:"message"`
 	}{
 		Message: msg,
 	}

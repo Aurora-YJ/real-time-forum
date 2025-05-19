@@ -14,8 +14,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	defer db.Close()
 	routes.Handle_routers(db)
+	defer db.Close()
 
 	fmt.Println("your serve on : http://localhost:8080")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

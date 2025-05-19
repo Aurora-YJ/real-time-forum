@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"forum/backend/controllers"
@@ -33,11 +34,18 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
+		fmt.Println("ggg", err)
 		controllers.Response("Invalid JSON...", 400, w)
 		return
 	}
 
-	if utils.ContainsEmpty(user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, user.Password, user.ConPassword) {
+	age, err := strconv.Atoi(user.Age)
+	if err != nil {
+		// تعامل مع الخطأ، مثل طباعة رسالة أو إرجاع استجابة خطأ
+		fmt.Println("Error converting age:", err)
+	}
+
+	if utils.ContainsEmpty(user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Password, user.ConPassword) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}
@@ -69,22 +77,22 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 	hashedPassword := string(pw)
 
-	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, user.Age, hashedPassword,
-		hashedPassword, Token, Expired.Format(time.DateTime))
+	err = models.InsertUser(w, r, db, user.Nickname, user.Firstname, user.Lastname, user.Gender, user.Email, hashedPassword,
+		Token, Expired.Format(time.DateTime), age)
 	if err != nil {
 		errorr := utils.Checkerror_Database(err)
-		if utils.Check_string(errorr , "Email") {
+		if utils.Check_string(errorr, "Email") {
 			controllers.Response("This email already exists...", 405, w)
 			return
-		} else if utils.Check_string(errorr , "Nickname") {
+		} else if utils.Check_string(errorr, "Nickname") {
 			controllers.Response("This Nickname already exists...", 405, w)
 			return
 		} else {
 			controllers.Response("We are experiencing some problems, we apologize :(", 500, w)
-			fmt.Println("error database--->:",err)
+			fmt.Println("error database--->:", err)
 		}
 	}
 
-	http.SetCookie(w, &http.Cookie{Name: "Token" , Value: Token , HttpOnly: true, Secure: true})
+	http.SetCookie(w, &http.Cookie{Name: "Token", Value: Token, HttpOnly: true, Secure: true})
 	controllers.Response("you registered successfully! :)", 200, w)
 }

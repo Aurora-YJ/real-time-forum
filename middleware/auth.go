@@ -6,41 +6,41 @@ import (
 	"fmt"
 	"forum/backend/controllers"
 	"net/http"
+	"time"
 )
 
 func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("Token")
 		if err != nil {
-			fmt.Println("here--->", err)
-			controllers.Response("unable", 400, w)
+			controllers.Response("unauthorized", 403, w)
 			return
 		}
-		var id int
-		var nickname string
-
-		err = db.QueryRow("SELECT ID, Nickname FROM Users WHERE Session = ?", cookie.Value).Scan(&id, &nickname)
+		var userId int
+		var userName string
+		var expired time.Time
+		err = db.QueryRow("SELECT ID, Nickname ,Expired FROM Users WHERE Session=?", cookie.Value).Scan(&userId, &userName, &expired)
 		if err != nil {
-			if err == sql.ErrNoRows {
-				fmt.Println("الجلسة غير موجودة")
-				controllers.Response("الجلسة غير موجودة", 401, w)
-				return
+			fmt.Println("hiii", err)
+			err = db.Ping()
+			if err != nil {
+				fmt.Println("hello jhgkfjhgkf", err)
 			}
-			fmt.Println("خطأ في قاعدة البيانات:", err)
-			controllers.Response("خطأ في الخادم", 500, w)
+
+		}
+		if userId == 0 {
+			controllers.Response("unauthorized", 403, w)
+			fmt.Println("hi youssef hhhh")
 			return
 		}
 
-		if id == 0 {
-			fmt.Println("he youssef")
-			controllers.Response("unable", 200, w)
+		if time.Now().UTC().After(expired.UTC()) {
+			db.Exec("UPDATE users set Session=? WHERE ID=?", "", userId)
+			controllers.Response("unauthorized", 403, w)
 			return
 		}
-
-		ctx := r.Context()
-		ctx = context.WithValue(ctx, "ID", id)
-		ctx = context.WithValue(ctx, "Nickname", nickname)
-
+		ctx := context.WithValue(r.Context(), "userId", userId)
+		ctx = context.WithValue(ctx, "userName", userName)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

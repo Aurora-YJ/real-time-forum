@@ -1,18 +1,14 @@
+// auth.js
 export async function isLogged() {
     try {
-        const rep = await fetch("/auth")
-        const repda = await rep.json()
-        console.log(repda);
-        
-        if (rep.ok) {
-            return true
-        } else {
-            return false
-        }
-        
-        
+        const response = await fetch("/auth");
+        if (!response.ok) return false;
+
+        const data = await response.json();
+        console.log(data);
+        return true;
     } catch (error) {
-        console.log("func islogged:",error)
-        return false
+        console.error("func isLogged:", error);
+        return false;
     }
 }

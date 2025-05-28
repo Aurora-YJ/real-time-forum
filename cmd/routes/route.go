@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func Handle_routers(db *sql.DB) {
+func Handlerouters(db *sql.DB) {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		handlers.Register(w, r, db)
 	})

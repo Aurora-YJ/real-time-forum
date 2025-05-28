@@ -41,7 +41,6 @@ func Register(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	age, err := strconv.Atoi(user.Age)
 	if err != nil {
-		// تعامل مع الخطأ، مثل طباعة رسالة أو إرجاع استجابة خطأ
 		fmt.Println("Error converting age:", err)
 	}
 

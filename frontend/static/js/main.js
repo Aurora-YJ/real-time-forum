@@ -4,12 +4,17 @@ import { registerandlogin } from "./registerandlogin.js";
 import { pagehome } from "./pagehome.js";
 
 async function init() {
-    let isLoggedIn = await isLogged();
+    try {
+        const isLoggedIn = await isLogged();
 
-    if (isLoggedIn) {
-        pagehome();
-    } else {
-        registerandlogin();
+        if (isLoggedIn) {
+            pagehome(); 
+        } else {
+            registerandlogin(); 
+        }
+    } catch (error) {
+        console.error("Error in init:", error);
+       
     }
 }
 

@@ -2,6 +2,7 @@ import { home } from "./dom.js";
 import { FetchCreatPost } from "./api.js"
 
 export async function pagehome() {
+    document.body.innerHTML = "";
     document.body.innerHTML = home;
     document.getElementById("main-style").href = "frontend/static/css/index.css";
 

@@ -20,13 +20,15 @@ func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		controllers.Response("Method Not Allowed...", 405, w)
 		return
 	}
-	userID := r.Context().Value("ID").(int)
+	
+	userID := r.Context().Value("userId").(int)
 	var postt post
 	err := json.NewDecoder(r.Body).Decode(&postt)
 	if err != nil {
 		controllers.Response("Invalid JSON...", 40., w)
 		return
 	}
+
 	if utils.ContainsEmpty(postt.Title, postt.Content) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return

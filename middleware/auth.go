@@ -19,7 +19,6 @@ func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 		var userId int
 		var userName string
 		var expired time.Time
-
 		err = db.QueryRow("SELECT ID, Nickname, Expired FROM Users WHERE Session=?", cookie.Value).Scan(&userId, &userName, &expired)
 		if err == sql.ErrNoRows {
 			controllers.Response("unauthorized", 403, w)

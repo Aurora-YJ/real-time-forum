@@ -31,12 +31,13 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 		    U.Nickname
 		FROM Posts P
 		JOIN Users U ON U.ID = P.ID_User
+
 	`
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
+	defer rows.Close()
 
 	for rows.Next() {
 		var p Post

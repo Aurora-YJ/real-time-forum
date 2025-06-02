@@ -47,13 +47,16 @@ function showPost(repdata) {
 
         const creatdate = document.createElement("li")
         creatdate.setAttribute("class", "creatdate")
-        creatdate.innerHTML = `creat at: ${p.CreataAt}`
+        const dateObj = new Date(p.CreataAt);
+        const datee = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        creatdate.innerHTML = `creat at: ${datee}`
 
 
         const foricon = document.createElement("li")
         foricon.innerHTML = `<i class="fa-solid fa-user"></i>`
 
-
+        
         const forname = document.createElement("li")
         forname.innerHTML = `${p.Creator}`
 
@@ -75,12 +78,53 @@ function showPost(repdata) {
         const description = document.createElement("p")
         description.innerHTML = `${p.Content}`
 
-
-        
         content.appendChild(title)
         content.appendChild(description)
+
+        // catigoryandcomment
+
+        const catyandcmt =  document.createElement("div")
+        catyandcmt.setAttribute("class", "catigoryandcomment")
+
+        const category =  document.createElement("div")
+        category.setAttribute("class", "category")
+
+        const pp = document.createElement("p")
+        pp.innerHTML = `categorys: `
+
+        /* this for categorys*/
+
+        /* end */
+
+
+        
+       
+
+
+        const comment =  document.createElement("div")
+        comment.setAttribute("class", "comment")
+
+
+        const spancmmt = document.createElement("span")
+        spancmmt.innerHTML = `${p.CountComment}`
+
+        const btncmmt = document.createElement("button")
+        btncmmt.innerHTML = `<i class="fa-solid fa-comments"></i>`
+
+        comment.appendChild(spancmmt)
+        comment.appendChild(btncmmt)
+
+
+        category.appendChild(pp)
+        catyandcmt.appendChild(category)
+        catyandcmt.appendChild(comment)
+
+        
+        
+
         onepost.appendChild(userbar)
         onepost.appendChild(content)
+        onepost.appendChild(catyandcmt)
         allposts.appendChild(onepost)
     })
 

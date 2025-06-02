@@ -122,6 +122,18 @@ const testpost = `
             <div class="category">
                 <p >categorys: <span style="color: red;">sport , code</span></p>
             </div>
+            <div class="likes">
+                <div class="like">
+                    <span>2</span>   
+                    <button class="like"> </button>
+                </div>
+                <div class="dislike">
+                    <span>2</span>   
+                    <button class="dislike"> </button>
+                </div>
+            
+
+            </div>
             <div class="comment">
                 <span>2</span>   
                 <button>

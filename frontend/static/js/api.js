@@ -130,6 +130,9 @@ function isValidEmail(email) {
 function isLikelyEmail(str) {
     return /@/.test(str) && /\./.test(str);
 }
+
+
+
 export async function FetchCreatPost() {
     const Submitpost = document.getElementById("Submitpost");
 

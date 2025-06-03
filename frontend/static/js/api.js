@@ -141,6 +141,17 @@ export async function FetchCreatPost() {
         return;
     }
 
+    const cooding = document.getElementById("cooding");
+
+    let c = ""
+    cooding.addEventListener("click", function () {
+        if (c == "") {
+            c = "coding"
+        } else  {
+            c = ""
+        }
+    })
+
     Submitpost.addEventListener("click", async function () {
         const titleInput = document.getElementById("titleID");
         const contentInput = document.getElementById("contentID");
@@ -164,7 +175,7 @@ export async function FetchCreatPost() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ title, content })
+                body: JSON.stringify({ title, content , c})
             });
 
 

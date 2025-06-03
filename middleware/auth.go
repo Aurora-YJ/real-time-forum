@@ -31,12 +31,6 @@ func CheckSession(next http.Handler, db *sql.DB) http.HandlerFunc {
 		}
 		
 
-		if time.Now().UTC().After(expired.UTC()) {
-			_, _ = db.Exec("UPDATE users SET Session='' WHERE ID=?", userId)
-			controllers.Response("unauthorized", 403, w)
-			return
-		}
-
 		ctx := context.WithValue(r.Context(), "userId", userId)
 		ctx = context.WithValue(ctx, "userName", userName)
 		next.ServeHTTP(w, r.WithContext(ctx))

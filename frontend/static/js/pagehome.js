@@ -141,6 +141,7 @@ function creatpostinput() {
     divcreatpost.innerHTML = `
         <input id="titleID" type="text" placeholder="Post Title" />
         <textarea id="contentID" placeholder="Write your post here..."></textarea>
+        <button id="cooding">cooding</button>
          <button id="Submitpost">Submit</button>
         <button id="deletePostBtn">SKIP</button>
     `;

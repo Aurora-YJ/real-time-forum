@@ -13,6 +13,7 @@ import (
 type post struct {
 	Title   string `json:"Title"`
 	Content string `json:"content"`
+	Category string `json:"c"`
 }
 
 func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -29,18 +30,32 @@ func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	if utils.ContainsEmpty(postt.Title, postt.Content) {
+	if utils.ContainsEmpty(postt.Title, postt.Content, postt.Category) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}
 
-	err = models.InsertPost(postt.Title, postt.Content,userID, db)
+	postid , err := models.InsertPost(postt.Title, postt.Content,userID, db)
 	if err != nil {
 		controllers.Response("error in the server...", 500, w)
 		fmt.Println("error to insert post..<<--", err)
 		return
 	}
 
+	if postid == 0 {
+		
+			controllers.Response("error in the server...", 500, w)
+			fmt.Println("error to insert post..<<--", err)
+			return
+		
+	}
+
+	err = models.InsertCategory(postt.Category, postid, db)
+	if err != nil {
+		controllers.Response("error in the server...", 500, w)
+		fmt.Println("error to insert post..<<--", err)
+		return
+	}
 
 	controllers.Response("your post has created", http.StatusCreated, w)
 

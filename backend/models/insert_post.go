@@ -1,11 +1,19 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
-func InsertPost(Title, Content string,userID int, db *sql.DB) error {
-	_ , err := db.Exec("INSERT INTO Posts (Title , Content,  ID_User ) VALUES(?,?,?)", Title, Content,  userID)
+func InsertPost(Title, Content string, userID int, db *sql.DB) (int, error) {
+	res, err := db.Exec("INSERT INTO Posts (Title , Content,  ID_User ) VALUES(?,?,?)", Title, Content, userID)
 	if err != nil {
-		return err
+		return 0, err
 	}
-	return nil
+
+	lastID, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(lastID), nil
 }

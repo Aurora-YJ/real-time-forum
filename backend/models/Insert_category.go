@@ -12,6 +12,7 @@ func InsertCategory(c string, postid int, db *sql.DB) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("s", id)
 
 	fmt.Println(",,,hjk")
 	_, err = db.Exec("INSERT INTO Post_Category (ID_Post,  ID_Category) VALUES(?,?)", postid, id)

@@ -28,7 +28,7 @@ export async function pagehome() {
 
 function showPost(repdata) {
     console.log(repdata.message);
-    
+
     const allposts = document.getElementById("allposts")
 
     repdata.message.forEach(p => {
@@ -56,7 +56,7 @@ function showPost(repdata) {
         const foricon = document.createElement("li")
         foricon.innerHTML = `<i class="fa-solid fa-user"></i>`
 
-        
+
         const forname = document.createElement("li")
         forname.innerHTML = `${p.Creator}`
 
@@ -83,10 +83,10 @@ function showPost(repdata) {
 
         // catigoryandcomment
 
-        const catyandcmt =  document.createElement("div")
+        const catyandcmt = document.createElement("div")
         catyandcmt.setAttribute("class", "catigoryandcomment")
 
-        const category =  document.createElement("div")
+        const category = document.createElement("div")
         category.setAttribute("class", "category")
 
         const pp = document.createElement("p")
@@ -97,11 +97,11 @@ function showPost(repdata) {
         /* end */
 
 
-        
-       
 
 
-        const comment =  document.createElement("div")
+
+
+        const comment = document.createElement("div")
         comment.setAttribute("class", "comment")
 
 
@@ -119,8 +119,8 @@ function showPost(repdata) {
         catyandcmt.appendChild(category)
         catyandcmt.appendChild(comment)
 
-        
-        
+
+
 
         onepost.appendChild(userbar)
         onepost.appendChild(content)
@@ -141,7 +141,22 @@ function creatpostinput() {
     divcreatpost.innerHTML = `
         <input id="titleID" type="text" placeholder="Post Title" />
         <textarea id="contentID" placeholder="Write your post here..."></textarea>
-        <button id="cooding">cooding</button>
+        
+       <select id="categorySelect" name="category" multiple>
+  <option value="Coding">Coding</option>
+  <option value="Technology">Technology</option>
+  <option value="Lifestyle">Lifestyle</option>
+  <option value="Gaming">Gaming</option>
+  <option value="Sports">Sports</option>
+  <option value="Music">Music</option>
+  <option value="Movies">Movies</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Other">Other</option>
+</select>
+
+
+
          <button id="Submitpost">Submit</button>
         <button id="deletePostBtn">SKIP</button>
     `;

@@ -146,7 +146,7 @@ export async function FetchCreatPost() {
     let c = ""
     cooding.addEventListener("click", function () {
         if (c == "") {
-            c = "coding"
+            c = "Coding"
         } else  {
             c = ""
         }

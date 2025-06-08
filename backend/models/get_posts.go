@@ -14,9 +14,15 @@ type Post struct {
 	CreataAt     time.Time
 	Likes        int
 	Dislikes     int
+	CategoryPost string
 	CountComment int
 	Comments     []Comment
 	Status       string
+}
+
+type category struct {
+	IdCategory int
+	NameCategory string
 }
 
 func GetPosts(db *sql.DB) ([]Post, error) {
@@ -28,10 +34,13 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 		    P.Title,
 		    P.Content,
 		    p.DateCreation,
-		    U.Nickname
+		    U.Nickname, 
+			GROUP_CONCAT(c.Name_Category, ' #') AS Categories
 		FROM Posts P
 		JOIN Users U ON U.ID = P.ID_User
-
+		JOIN Post_Category pc ON P.ID = pc.ID_Post
+		JOIN Category c ON pc.ID_Category  = c.ID
+		GROUP BY P.ID
 	`
 	rows, err := db.Query(query)
 	if err != nil {
@@ -41,7 +50,7 @@ func GetPosts(db *sql.DB) ([]Post, error) {
 
 	for rows.Next() {
 		var p Post
-		err := rows.Scan(&p.ID, &p.Title, &p.Content, &p.CreataAt, &p.Creator)
+		err := rows.Scan(&p.ID, &p.Title, &p.Content, &p.CreataAt, &p.Creator, &p.CategoryPost)
 		if err != nil {
 			return nil, err
 		}

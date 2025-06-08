@@ -143,20 +143,18 @@ function creatpostinput() {
         <textarea id="contentID" placeholder="Write your post here..."></textarea>
         
        <select id="categorySelect" name="category" multiple>
-  <option value="Coding">Coding</option>
-  <option value="Technology">Technology</option>
-  <option value="Lifestyle">Lifestyle</option>
-  <option value="Gaming">Gaming</option>
-  <option value="Sports">Sports</option>
-  <option value="Music">Music</option>
-  <option value="Movies">Movies</option>
-  <option value="Food">Food</option>
-  <option value="Travel">Travel</option>
-  <option value="Other">Other</option>
-</select>
-
-
-
+            <option value="Coding">Coding</option>
+            <option value="Technology">Technology</option>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Sports">Sports</option>
+            <option value="Music">Music</option>
+            <option value="Movies">Movies</option>
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Other">Other</option>
+        </select>
+        
          <button id="Submitpost">Submit</button>
         <button id="deletePostBtn">SKIP</button>
     `;

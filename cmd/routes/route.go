@@ -2,6 +2,7 @@ package routes
 
 import (
 	"database/sql"
+	"forum/backend/chat"
 	"forum/backend/controllers"
 	"forum/backend/handlers"
 	"forum/backend/handlers/posts"
@@ -25,12 +26,17 @@ func Handlerouters(db *sql.DB) {
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			controllers.Auth(w, r)
 		}), db))
+
+	// chatt
+	http.HandleFunc("/chat", middleware.CheckSession(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			chat.HandleChat(w, r, db)
+		}), db))
+	//posts FetchPosts
 	http.HandleFunc("/creatpost", middleware.CheckSession(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			posts.FetchCreatPosts(w, r, db)
 		}), db))
-
-	//posts FetchPosts
 	http.HandleFunc("/fetchposts", middleware.CheckSession(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			posts.FetchPosts(w, r, db)

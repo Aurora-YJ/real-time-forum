@@ -148,11 +148,11 @@ function creatpostinput() {
           <textarea id="contentID" placeholder="Write your post here..."></textarea>
       
           <div id="categoryWrapper" class="category-wrapper">
-              ${categories.map(cat => `<span class="category" data-value="${cat}">${cat}</span>`).join(' ')}
+              ${categories.map(cat => `<button id="category" class="category" data-value="${cat}">${cat}</button>`)}
           </div>
       
-          <button id="Submitpost">Submit</button>
-          <button id="deletePostBtn">SKIP</button>
+          <button class="bbutton" id="Submitpost">Submit</button>
+          <button class="bbutton" id="deletePostBtn">SKIP</button>
       `;
       
     document.body.appendChild(divcreatpost);

@@ -317,7 +317,7 @@ main article .potess .post .catigoryandcomment .comment button {
 
 .creatpost {
     width: 400px;
-    height: 300px;
+    height: 400px;
     background-color: #f4f4f4;
     margin-left: 50%;
     transform: translateX(-50%); 
@@ -344,7 +344,7 @@ main article .potess .post .catigoryandcomment .comment button {
 
 .creatpost #contentID {
     width: 80%;
-    height: 100px;
+    height: 60px;
     padding: 10px;
     margin-top: 15px;
     font-size: 16px;
@@ -355,7 +355,7 @@ main article .potess .post .catigoryandcomment .comment button {
 }
 
 
-.creatpost button {
+.creatpost .bbutton {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -368,12 +368,30 @@ main article .potess .post .catigoryandcomment .comment button {
 }
 
 
-.creatpost button:hover {
+.creatpost .bbutton:hover {
     background-color: #45a049;
 }
 
 
 
-/**/
+/*category*/
 
+
+#categoryWrapper {
+
+    background-color: red;
+
+    width: 85%;
+
+    height: 100px;
+
+    margin: auto;
+
+    
+}
+#category {
+    width: 20px;
+    height: 30px;
+    background-color: #333;
+}
 

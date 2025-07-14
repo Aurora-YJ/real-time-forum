@@ -26,7 +26,7 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			break
 		}
 
-		fmt.Println("hh", msg)
+		fmt.Println("hh", string(msg))
 
 		conn.WriteMessage(websocket.TextMessage, []byte("hi from server"))
 

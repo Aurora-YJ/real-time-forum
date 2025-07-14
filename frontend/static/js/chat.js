@@ -1,6 +1,6 @@
-export function showMsgUsr() {
-  const socket = new WebSocket("http://localhost:8080/chat");
+export   const socket = new WebSocket("ws://localhost:8080/chat");
 
+export function showMsgUsr() {
   socket.onopen = () => {
     console.log("Connected to WebSocket server");
     socket.send("Hello from JavaScript!");

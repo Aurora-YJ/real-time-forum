@@ -1,168 +1,164 @@
 import { home } from "./dom.js";
-import { FetchCreatPost } from "./api.js"
-import { showMsgUsr } from "./chat.js"
+import { FetchCreatPost } from "./api.js";
+import { showMsgUsr } from "./chat.js";
 
 export async function pagehome() {
-    document.body.innerHTML = "";
-    document.body.innerHTML = home;
-    document.getElementById("main-style").href = "frontend/static/css/index.css";
-
-    const addPostBtn = document.getElementById("AddPostbtn");
-    addPostBtn.addEventListener("click", creatpostinput);
-    try {
-        const rep = await fetch("/fetchposts", {
-            method: "GET",
-        })
-        if (!rep.ok) {
-            console.log("ERROR TO GET POSTS")
-        }
-        const repdata = await rep.json()
-        showMsgUsr()
-        showPost(repdata)
-
-    } catch (error) {
-        console.error(error);
+  document.body.innerHTML = "";
+  document.body.innerHTML = home;
+  document.getElementById("main-style").href = "frontend/static/css/index.css";
+  
+  showMsgUsr();
+  const addPostBtn = document.getElementById("AddPostbtn");
+  addPostBtn.addEventListener("click", creatpostinput);
+  try {
+    const rep = await fetch("/fetchposts", {
+      method: "GET",
+    });
+    if (!rep.ok) {
+      console.log("ERROR TO GET POSTS");
     }
+    const repdata = await rep.json();
+    if (repdata.lenght == null) {
+      return;
+    }
+    showPost(repdata);
+  } catch (error) {
+    console.error(error);
+  }
 }
-
-
-
 
 function showPost(repdata) {
-    console.log(repdata.message);
+  if (repdata.lenght == null) {
+    return;
+  }
 
-    const allposts = document.getElementById("allposts")
+  const allposts = document.getElementById("allposts");
 
-    repdata.message.forEach(p => {
+  repdata.message.forEach((p) => {
+    const onepost = document.createElement("div");
+    onepost.setAttribute("class", "post");
 
-        const onepost = document.createElement("div")
-        onepost.setAttribute("class", "post")
+    const userbar = document.createElement("div");
+    userbar.setAttribute("class", "userbar");
 
-        const userbar = document.createElement("div")
-        userbar.setAttribute("class", "userbar")
+    const ul = document.createElement("ul");
+    ul.setAttribute("class", "ulInUserbar");
 
-        const ul = document.createElement("ul")
-        ul.setAttribute("class", "ulInUserbar")
+    const imageandname = document.createElement("div");
+    imageandname.setAttribute("class", "imageandname");
 
-        const imageandname = document.createElement("div")
-        imageandname.setAttribute("class", "imageandname")
+    const creatdate = document.createElement("li");
+    creatdate.setAttribute("class", "creatdate");
+    const dateObj = new Date(p.CreataAt);
+    const datee = dateObj.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
 
-        const creatdate = document.createElement("li")
-        creatdate.setAttribute("class", "creatdate")
-        const dateObj = new Date(p.CreataAt);
-        const datee = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    creatdate.innerHTML = `creat at: ${datee}`;
 
-        creatdate.innerHTML = `creat at: ${datee}`
+    const foricon = document.createElement("li");
+    foricon.innerHTML = `<i class="fa-solid fa-user"></i>`;
 
+    const forname = document.createElement("li");
+    forname.innerHTML = `${p.Creator}`;
 
-        const foricon = document.createElement("li")
-        foricon.innerHTML = `<i class="fa-solid fa-user"></i>`
+    imageandname.appendChild(foricon);
+    imageandname.appendChild(forname);
+    ul.appendChild(imageandname);
+    ul.appendChild(creatdate);
+    userbar.appendChild(ul);
 
+    // for content
+    const content = document.createElement("div");
+    content.setAttribute("class", "content");
 
-        const forname = document.createElement("li")
-        forname.innerHTML = `${p.Creator}`
+    const title = document.createElement("h3");
+    title.innerHTML = `${p.Title}`;
 
+    const description = document.createElement("p");
+    description.innerHTML = `${p.Content}`;
 
-        imageandname.appendChild(foricon)
-        imageandname.appendChild(forname)
-        ul.appendChild(imageandname)
-        ul.appendChild(creatdate)
-        userbar.appendChild(ul)
+    content.appendChild(title);
+    content.appendChild(description);
 
+    // catigoryandcomment
 
-        // for content
-        const content = document.createElement("div")
-        content.setAttribute("class", "content")
+    const catyandcmt = document.createElement("div");
+    catyandcmt.setAttribute("class", "catigoryandcomment");
 
-        const title = document.createElement("h3")
-        title.innerHTML = `${p.Title}`
+    const category = document.createElement("div");
+    category.setAttribute("class", "category");
 
-        const description = document.createElement("p")
-        description.innerHTML = `${p.Content}`
+    const pp = document.createElement("p");
+    pp.innerHTML = `categorys: `;
 
-        content.appendChild(title)
-        content.appendChild(description)
+    /* this for categorys*/
 
-        // catigoryandcomment
+    /* end */
 
-        const catyandcmt = document.createElement("div")
-        catyandcmt.setAttribute("class", "catigoryandcomment")
+    const comment = document.createElement("div");
+    comment.setAttribute("class", "comment");
 
-        const category = document.createElement("div")
-        category.setAttribute("class", "category")
+    const spancmmt = document.createElement("span");
+    spancmmt.innerHTML = `${p.CountComment}`;
 
-        const pp = document.createElement("p")
-        pp.innerHTML = `categorys: `
+    const btncmmt = document.createElement("button");
+    btncmmt.innerHTML = `<i class="fa-solid fa-comments"></i>`;
 
-        /* this for categorys*/
+    comment.appendChild(spancmmt);
+    comment.appendChild(btncmmt);
 
-        /* end */
+    category.appendChild(pp);
+    catyandcmt.appendChild(category);
+    catyandcmt.appendChild(comment);
 
-
-
-
-
-
-        const comment = document.createElement("div")
-        comment.setAttribute("class", "comment")
-
-
-        const spancmmt = document.createElement("span")
-        spancmmt.innerHTML = `${p.CountComment}`
-
-        const btncmmt = document.createElement("button")
-        btncmmt.innerHTML = `<i class="fa-solid fa-comments"></i>`
-
-        comment.appendChild(spancmmt)
-        comment.appendChild(btncmmt)
-
-
-        category.appendChild(pp)
-        catyandcmt.appendChild(category)
-        catyandcmt.appendChild(comment)
-
-
-
-
-        onepost.appendChild(userbar)
-        onepost.appendChild(content)
-        onepost.appendChild(catyandcmt)
-        allposts.appendChild(onepost)
-    })
-
-
+    onepost.appendChild(userbar);
+    onepost.appendChild(content);
+    onepost.appendChild(catyandcmt);
+    allposts.appendChild(onepost);
+  });
 }
 
-
 function creatpostinput() {
-    const divcreatpost = document.createElement("div");
+  const divcreatpost = document.createElement("div");
 
-    divcreatpost.setAttribute("id", "creatpostt");
-    divcreatpost.classList.add("creatpost");
+  divcreatpost.setAttribute("id", "creatpostt");
+  divcreatpost.classList.add("creatpost");
 
-    const categories = [
-        "Coding", "Technology", "Lifestyle", "Gaming", "Sports",
-        "Music", "Movies", "Food", "Travel", "Other"
-      ];
-      
-      divcreatpost.innerHTML = `
+  const categories = [
+    "Coding",
+    "Technology",
+    "Lifestyle",
+    "Gaming",
+    "Sports",
+    "Music",
+    "Movies",
+    "Food",
+    "Travel",
+    "Other",
+  ];
+
+  divcreatpost.innerHTML = `
           <input id="titleID" type="text" placeholder="Post Title" />
           <textarea id="contentID" placeholder="Write your post here..."></textarea>
       
           <div id="categoryWrapper" class="category-wrapper">
-              ${categories.map(cat => `<button id="category" class="category" data-value="${cat}">${cat}</button>`)}
+              ${categories.map(
+                (cat) =>
+                  `<button id="category" class="category" data-value="${cat}">${cat}</button>`
+              )}
           </div>
       
           <button class="bbutton" id="Submitpost">Submit</button>
           <button class="bbutton" id="deletePostBtn">SKIP</button>
       `;
-      
-    document.body.appendChild(divcreatpost);
 
-    const deletePostBtn = document.getElementById("deletePostBtn");
-    deletePostBtn.addEventListener("click", function () {
-        divcreatpost.remove();
-    });
-    FetchCreatPost()
+  document.body.appendChild(divcreatpost);
+
+  const deletePostBtn = document.getElementById("deletePostBtn");
+  deletePostBtn.addEventListener("click", function () {
+    divcreatpost.remove();
+  });
+  FetchCreatPost();
 }
-

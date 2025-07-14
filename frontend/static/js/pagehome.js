@@ -1,13 +1,13 @@
 import { home } from "./dom.js";
-import { FetchCreatPost } from "./api.js";
 import { showMsgUsr } from "./chat.js";
+import {creatpostinput} from "./creat_post.js"
 
 export async function pagehome() {
   document.body.innerHTML = "";
   document.body.innerHTML = home;
   document.getElementById("main-style").href = "frontend/static/css/index.css";
-  
   showMsgUsr();
+
   const addPostBtn = document.getElementById("AddPostbtn");
   addPostBtn.addEventListener("click", creatpostinput);
   try {
@@ -118,47 +118,4 @@ function showPost(repdata) {
     onepost.appendChild(catyandcmt);
     allposts.appendChild(onepost);
   });
-}
-
-function creatpostinput() {
-  const divcreatpost = document.createElement("div");
-
-  divcreatpost.setAttribute("id", "creatpostt");
-  divcreatpost.classList.add("creatpost");
-
-  const categories = [
-    "Coding",
-    "Technology",
-    "Lifestyle",
-    "Gaming",
-    "Sports",
-    "Music",
-    "Movies",
-    "Food",
-    "Travel",
-    "Other",
-  ];
-
-  divcreatpost.innerHTML = `
-          <input id="titleID" type="text" placeholder="Post Title" />
-          <textarea id="contentID" placeholder="Write your post here..."></textarea>
-      
-          <div id="categoryWrapper" class="category-wrapper">
-              ${categories.map(
-                (cat) =>
-                  `<button id="category" class="category" data-value="${cat}">${cat}</button>`
-              )}
-          </div>
-      
-          <button class="bbutton" id="Submitpost">Submit</button>
-          <button class="bbutton" id="deletePostBtn">SKIP</button>
-      `;
-
-  document.body.appendChild(divcreatpost);
-
-  const deletePostBtn = document.getElementById("deletePostBtn");
-  deletePostBtn.addEventListener("click", function () {
-    divcreatpost.remove();
-  });
-  FetchCreatPost();
 }

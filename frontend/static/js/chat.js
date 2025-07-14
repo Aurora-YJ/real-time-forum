@@ -18,3 +18,12 @@ export function showMsgUsr() {
     console.error("WebSocket error:", error);
   };
 }
+
+
+export function sendMsg(msg) {
+    if (socket.readyState == WebSocket.OPEN) {
+        socket.send(msg)
+    } else {
+            console.error("Socket is not open. readyState=", socket.readyState);
+    }
+}

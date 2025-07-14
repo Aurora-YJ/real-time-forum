@@ -59,7 +59,8 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		fmt.Println("hh", string(msg))
 
 		BroadcastMessage("hi from server")
-		fmt.Println("------____>", connections)
+	
+		
 	}
 }
 

@@ -1,198 +1,173 @@
-
-import { pagehome } from "./pagehome.js"
+import { pagehome } from "./pagehome.js";
 export function registerInfo() {
-    const regBtn = document.getElementById('signup');
+  const regBtn = document.getElementById("signup");
 
-    regBtn.addEventListener('click', async function (e) {
-        e.preventDefault();
+  regBtn.addEventListener("click", async function (e) {
+    e.preventDefault();
 
-        const nickname = document.querySelector('[name="Nickname"]').value;
-        const firstname = document.querySelector('[name="firstname"]').value;
-        const lastname = document.querySelector('[name="lastname"]').value;
-        const gender = document.querySelector('[name="gender"]').value;
-        const email = document.querySelector('[name="email"]').value;
-        const age = document.querySelector('[name="age"]').value;
-        const password = document.querySelector('[name="password"]').value;
-        const confirmPassword = document.querySelector('[name="confirm_password"]').value;
+    const nickname = document.querySelector('[name="Nickname"]').value;
+    const firstname = document.querySelector('[name="firstname"]').value;
+    const lastname = document.querySelector('[name="lastname"]').value;
+    const gender = document.querySelector('[name="gender"]').value;
+    const email = document.querySelector('[name="email"]').value;
+    const age = document.querySelector('[name="age"]').value;
+    const password = document.querySelector('[name="password"]').value;
+    const confirmPassword = document.querySelector(
+      '[name="confirm_password"]'
+    ).value;
 
-        if (!nickname || !firstname || !lastname || !gender || !email || !password || !confirmPassword || !age) {
-            showError("Please fill in all fields before continuing...");
-            return;
-        }
+    if (
+      !nickname ||
+      !firstname ||
+      !lastname ||
+      !gender ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !age
+    ) {
+      showError("Please fill in all fields before continuing...");
+      return;
+    }
 
-        const ageNum = Number(age);
-        if (isNaN(ageNum) || ageNum < 18) {
-            showError("Your age is not allowed...");
-            return;
-        }
+    const ageNum = Number(age);
+    if (isNaN(ageNum) || ageNum < 18) {
+      showError("Your age is not allowed...");
+      return;
+    }
 
-        if (!isValidEmail(email)) {
-            showError("Invalid email format...");
-            return;
-        }
-        
-        if (password !== confirmPassword) {
-            showError("Passwords do not match...");
-            return;
-        }
+    if (!isValidEmail(email)) {
+      showError("Invalid email format...");
+      return;
+    }
 
+    if (password !== confirmPassword) {
+      showError("Passwords do not match...");
+      return;
+    }
 
-        try {
-            const response = await fetch("/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ nickname, firstname, lastname, gender, email, age, password, confirmPassword })
-            });
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nickname,
+          firstname,
+          lastname,
+          gender,
+          email,
+          age,
+          password,
+          confirmPassword,
+        }),
+      });
 
-            if (!response.ok) {
-                showError("Failed to register. Please try again.")
-                return;
-            }        
-            const data = await response.json()
-            pagehome()
-
-        } catch (error) {
-
-            console.error(error);
-        }
-    });
+      if (!response.ok) {
+        showError("Failed to register. Please try again.");
+        return;
+      }
+      const data = await response.json();
+      pagehome();
+    } catch (error) {
+      console.error(error);
+    }
+  });
 }
 
 export function LoginInfo() {
-    const log = document.getElementById("signin");
-    log.addEventListener('click', async function (e) {
-        e.preventDefault();
+  const log = document.getElementById("signin");
+  log.addEventListener("click", async function (e) {
+    e.preventDefault();
 
-        const nameOrEmail = document.querySelector('[name="Nicknameoremail"]').value
-        const password = document.querySelector('[name="password"]').value
-        const confpassword = document.querySelector('[name="confirm_password"]').value
+    const nameOrEmail = document.querySelector(
+      '[name="Nicknameoremail"]'
+    ).value;
+    const password = document.querySelector('[name="password"]').value;
+    const confpassword = document.querySelector(
+      '[name="confirm_password"]'
+    ).value;
 
-        if (!nameOrEmail || !password) {
-            showError("Please fill in all fields before continuing...");
-            return;
-        }
+    if (!nameOrEmail || !password) {
+      showError("Please fill in all fields before continuing...");
+      return;
+    }
 
-        if (isLikelyEmail(nameOrEmail)) {
-            if (!isValidEmail(nameOrEmail)) {
-                showError("Invalid email format...");
-                return;
-            }
-        }
-       
-        
-        if (password != confpassword ) {
-            showError("Passwords do not match...");
-            return;
-        }
+    if (isLikelyEmail(nameOrEmail)) {
+      if (!isValidEmail(nameOrEmail)) {
+        showError("Invalid email format...");
+        return;
+      }
+    }
 
-        try {
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ nameOrEmail, password , confpassword})
-            });
+    if (password != confpassword) {
+      showError("Passwords do not match...");
+      return;
+    }
 
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nameOrEmail, password, confpassword }),
+      });
 
-            if (!response.ok) {
-                showError("Failed to login. Please try again.");
-                return;
-            }
+      if (!response.ok) {
+        showError("Failed to login. Please try again.");
+        return;
+      }
 
-            const data = response.json()
-            console.log(data.message)
-            pagehome()
-        } catch (error) {
-            console.error(error);
-        }
-
-    });
+      const data = response.json();
+      console.log(data.message);
+      pagehome();
+    } catch (error) {
+      console.error(error);
+    }
+  });
 }
 
 function showError(message) {
-    const errorDiv = document.getElementById("errorreglog");
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-    errorDiv.style.opacity = '1';
-    setTimeout(() => {
-        errorDiv.style.opacity = '0';
-    }, 2000);
+  const errorDiv = document.getElementById("errorreglog");
+  errorDiv.textContent = message;
+  errorDiv.style.display = "block";
+  errorDiv.style.opacity = "1";
+  setTimeout(() => {
+    errorDiv.style.opacity = "0";
+  }, 2000);
 }
 
 function isValidEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
 }
 
 function isLikelyEmail(str) {
-    return /@/.test(str) && /\./.test(str);
+  return /@/.test(str) && /\./.test(str);
 }
 
+export async function FetchCreatPost(title, contentInput, categorys) {
+  try {
+    const response = await fetch("/creatpost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, contentInput, categorys }),
+    });
 
-
-export async function FetchCreatPost() {
-    const Submitpost = document.getElementById("Submitpost");
-
-    if (!Submitpost) {
-        console.error("!!!Submitpost");
-        return;
+    if (!response.ok) {
+      console.log("errrrrrrrrrrrrro");
+      return;
     }
 
-    const cooding = document.getElementById("cooding");
-
-    let c = ""
-    cooding.addEventListener("click", function () {
-        if (c == "") {
-            c = "Coding"
-        } else  {
-            c = ""
-        }
-    })
-
-    Submitpost.addEventListener("click", async function () {
-        const titleInput = document.getElementById("titleID");
-        const contentInput = document.getElementById("contentID");
-
-        if (!titleInput || !contentInput) {
-            showError("Please fill in all fields before continuing...");
-            return;
-        }
-
-        const title = titleInput.value.trim();
-        const content = contentInput.value.trim();
-
-        if (!title || !content) {
-           // showError("Please fill in all fields before continuing...");
-            return;
-        }
-
-        try {
-            const response = await fetch("/creatpost", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ title, content , c})
-            });
-
-
-            if (!response.ok) {
-                console.log("errrrrrrrrrrrrro")
-                return;
-            }
-
-            const data = await response.json()
-            console.log(data.message)
-        } catch (error) {
-            console.error(error);
-        }
-        const formDiv = document.getElementById("creatpostt");
-        if (formDiv) {
-            formDiv.remove();
-        }
-    });
+    const data = await response.json();
+    console.log(data.message);
+  } catch (error) {
+    console.error(error);
+  }
+ 
+  
 }
-

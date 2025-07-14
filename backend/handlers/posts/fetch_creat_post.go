@@ -11,9 +11,13 @@ import (
 )
 
 type post struct {
-	Title   string `json:"Title"`
-	Content string `json:"content"`
-	Category string `json:"c"`
+	Title   string `json:"title"`
+	Content string `json:"contentInput"`
+	Categorys []Category `json:"categorys"`
+}
+
+type Category struct {
+	Catgo string
 }
 
 func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -30,7 +34,7 @@ func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	if utils.ContainsEmpty(postt.Title, postt.Content, postt.Category) {
+	if utils.ContainsEmpty(postt.Title, postt.Content, postt.Categorys) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}

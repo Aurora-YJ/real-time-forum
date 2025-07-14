@@ -377,21 +377,37 @@ main article .potess .post .catigoryandcomment .comment button {
 /*category*/
 
 
-#categoryWrapper {
-
-    background-color: red;
-
-    width: 85%;
-
-    height: 100px;
-
-    margin: auto;
-
-    
-}
-#category {
-    width: 20px;
-    height: 30px;
-    background-color: #333;
+/* Category wrapper */
+.category-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
+/* Category buttons */
+.category {
+  padding: 8px 16px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.category:hover {
+  background-color: #d0d0d0;
+}
+
+/* Highlight selected category if you use JavaScript */
+.category.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Action buttons */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

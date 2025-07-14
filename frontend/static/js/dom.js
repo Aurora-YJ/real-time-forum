@@ -75,10 +75,11 @@ export const home = `
         <section>
             
             <p class="ppp">  <i class="fa-solid fa-bell"></i>you chats</p> 
-            <div class="mesgfrom">
+            <div id="mesgfrom" class="mesgfrom">
                 <button>
                     <i class="fa-regular fa-message"></i>  youssef    
                 </button>
+
             </div>
         </section>
 

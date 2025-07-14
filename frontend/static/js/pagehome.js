@@ -1,5 +1,6 @@
 import { home } from "./dom.js";
 import { FetchCreatPost } from "./api.js"
+import { showMsgUsr } from "./chat.js"
 
 export async function pagehome() {
     document.body.innerHTML = "";
@@ -16,6 +17,7 @@ export async function pagehome() {
             console.log("ERROR TO GET POSTS")
         }
         const repdata = await rep.json()
+        showMsgUsr()
         showPost(repdata)
 
     } catch (error) {
@@ -164,16 +166,3 @@ function creatpostinput() {
     FetchCreatPost()
 }
 
-const forchat = document.getElementById("article")
-const chatBox = document.createElement("div");
-chatBox.setAttribute("id", "chatBox");
-chatBox.innerHTML = `
-<div id="chatMessages" style="height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-top: 20px;"></div>
-<input id="chatInput" type="text" placeholder="اكتب رسالتك..." style="width: 80%;" />
-<button id="sendChat">إرسال</button>
-`;
-if (forchat) {
-    forchat.appendChild(chatBox);
-} else {
-    console.error("العنصر المطلوب لإضافة الدردشة غير موجود");
-}

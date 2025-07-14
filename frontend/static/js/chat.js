@@ -1,0 +1,20 @@
+export function showMsgUsr() {
+  const socket = new WebSocket("http://localhost:8080/chat");
+
+  socket.onopen = () => {
+    console.log("Connected to WebSocket server");
+    socket.send("Hello from JavaScript!");
+  };
+
+  socket.onmessage = (event) => {
+    console.log("Received from server:", event.data);
+  };
+
+  socket.onclose = () => {
+    console.log("WebSocket connection closed");
+  };
+
+  socket.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+}

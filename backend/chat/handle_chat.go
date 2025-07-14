@@ -2,6 +2,7 @@ package chat
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -25,7 +26,9 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			break
 		}
 
-		conn.WriteMessage(websocket.TextMessage, msg)
+		fmt.Println("hh", msg)
+
+		conn.WriteMessage(websocket.TextMessage, []byte("hi from server"))
 
 	}
 }

@@ -1,4 +1,4 @@
-export   const socket = new WebSocket("ws://localhost:8080/chat");
+export const socket = new WebSocket("ws://localhost:8080/chat");
 
 export function showMsgUsr() {
   socket.onopen = () => {
@@ -7,7 +7,31 @@ export function showMsgUsr() {
   };
 
   socket.onmessage = (event) => {
-    console.log("Received from server:", event.data);
+    let msg;
+
+    try {
+      msg = JSON.parse(event.data);
+    } catch (err) {
+      console.error("Invalid JSON from server:", event.data);
+      return;
+    }
+
+    switch (msg.event) {
+      case "usersList":
+        AddUsersList(event.data);
+        break;
+
+      case "chatmsg":
+        showChatMessage(msg.data);
+        break;
+
+      case "writing":
+        showNotification(msg.data);
+        break;
+
+      default:
+        console.error("Unknown event:", msg.event)
+    }
   };
 
   socket.onclose = () => {
@@ -19,11 +43,44 @@ export function showMsgUsr() {
   };
 }
 
-
 export function sendMsg(msg) {
-    if (socket.readyState == WebSocket.OPEN) {
-        socket.send(msg)
-    } else {
-            console.error("Socket is not open. readyState=", socket.readyState);
-    }
+  console.log("is here");
+
+  if (socket.readyState == WebSocket.OPEN) {
+    socket.send(msg);
+  } else {
+    console.error("Socket is not open. readyState=", socket.readyState);
+  }
 }
+
+function AddUsersList(data) {
+  const mesgfrom = document.getElementById("mesgfrom");
+  let users = [];
+  try {
+    users = JSON.parse(data);
+  } catch (e) {
+    console.error("Failed to parse data:", data);
+    return;
+  }
+
+  if (users.length == 0) {
+    return;
+  }
+  users.forEach((u) => {
+    const btn = document.createElement("button");
+
+    const ic = document.createElement("i");
+    ic.setAttribute("class", "fa-regular fa-message");
+
+    btn.appendChild(ic);
+    btn.append(" " + u.name);
+
+    mesgfrom.appendChild(btn);
+  });
+}
+
+/*
+<button>
+   <i class="fa-regular fa-message"></i>  youssef    
+</button>
+*/

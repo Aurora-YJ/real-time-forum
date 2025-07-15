@@ -58,12 +58,18 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 		fmt.Println("hh", string(msg))
 
+		getListUsers()
+
 		BroadcastMessage("hi from server")
 	
 		
 	}
 }
 
+
+func getListUsers(){
+	
+}
 
 func BroadcastMessage(message string) {
 	mut.Lock()

@@ -13,12 +13,9 @@ import (
 type post struct {
 	Title   string `json:"title"`
 	Content string `json:"contentInput"`
-	Categorys []Category `json:"categorys"`
+	Categorys []string `json:"categorys"`
 }
 
-type Category struct {
-	Catgo string
-}
 
 func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	if r.Method != http.MethodPost {
@@ -34,7 +31,13 @@ func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 
-	if utils.ContainsEmpty(postt.Title, postt.Content, postt.Categorys) {
+	fmt.Println("---->" ,  postt)
+
+	return 
+
+
+	
+	if utils.ContainsEmpty(postt.Title, postt.Content) {
 		controllers.Response("Please fill in all fields before continuing...", 405, w)
 		return
 	}
@@ -54,7 +57,7 @@ func FetchCreatPosts(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		
 	}
 
-	err = models.InsertCategory(postt.Category, postid, db)
+	err = models.InsertCategory( "coding",postid, db)
 	if err != nil {
 		controllers.Response("error in the server...", 500, w)
 		fmt.Println("error to insert post..<<--", err)

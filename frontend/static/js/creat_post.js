@@ -59,18 +59,27 @@ export function creatpostinput() {
     const tt = document.getElementById("titleID");
     const dd = document.getElementById("contentID");
 
-    if (tt.value.trim().length === 0 && dd.value.trim().length === 0) {
+    if (tt.value.trim().length === 0 || dd.value.trim().length === 0) {
       alert("fail");
     } else {
       createIt(tt, dd);
     }
+    divcreatpost.remove();
   });
 }
 
 function createIt(tt, dd) {
+
   const selectedCategories = Array.from(
     document.querySelectorAll(".category.selected")
-  ).map((btn) => btn.dataset.value);  
+  ).map((btn) => btn.dataset.value);
 
- FetchCreatPost(tt.value.trim(), dd.value.trim(), selectedCategories);
+
+  if (selectedCategories.length == 0) {
+    alert("fail")
+    return
+  } 
+
+  FetchCreatPost(tt.value.trim(), dd.value.trim(), selectedCategories)
+
 }

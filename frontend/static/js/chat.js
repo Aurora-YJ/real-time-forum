@@ -1,6 +1,6 @@
-export const socket = new WebSocket("ws://localhost:8080/chat");
 
 export function showMsgUsr() {
+  const socket = new WebSocket("ws://localhost:8080/chat");
   socket.onopen = () => {
     console.log("Connected to WebSocket server");
     socket.send("Hello from JavaScript!");
@@ -8,17 +8,18 @@ export function showMsgUsr() {
 
   socket.onmessage = (event) => {
     let msg;
-
     try {
-      msg = JSON.parse(event.data);
+      msg = JSON.parse(event.data); 
     } catch (err) {
       console.error("Invalid JSON from server:", event.data);
       return;
     }
 
+
     switch (msg.event) {
       case "usersList":
-        AddUsersList(event.data);
+
+        AddUsersList(msg.data);
         break;
 
       case "chatmsg":
@@ -30,7 +31,7 @@ export function showMsgUsr() {
         break;
 
       default:
-        console.error("Unknown event:", msg.event)
+        console.error("Unknown event:", msg.event);
     }
   };
 
@@ -54,26 +55,17 @@ export function sendMsg(msg) {
 }
 
 function AddUsersList(data) {
-  const mesgfrom = document.getElementById("mesgfrom");
-  let users = [];
-  try {
-    users = JSON.parse(data);
-  } catch (e) {
-    console.error("Failed to parse data:", data);
-    return;
-  }
 
-  if (users.length == 0) {
-    return;
-  }
-  users.forEach((u) => {
+  const mesgfrom = document.getElementById("mesgfrom");
+  
+  data.forEach((u) => {
     const btn = document.createElement("button");
 
     const ic = document.createElement("i");
     ic.setAttribute("class", "fa-regular fa-message");
 
     btn.appendChild(ic);
-    btn.append(" " + u.name);
+    btn.append(" " + u.Nickname);
 
     mesgfrom.appendChild(btn);
   });

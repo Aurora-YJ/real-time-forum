@@ -2,17 +2,14 @@ package chat
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
 
 	"github.com/gorilla/websocket"
 )
-
-type msg struct {
-	Event string `json:"event"`
-	Data  string `json:"data"`
-}
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool { return true },
@@ -46,6 +43,13 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	connections[userID] = append(connections[userID], conn)
 	mut.Unlock()
 
+	users, err := getListUsers(userID, db)
+	if err != nil {
+		fmt.Println("error to get users list:", err)
+	}
+
+	BroadcastMessage("usersList", users)
+
 	defer func() {
 		CloseUserConnections(userID)
 	}()
@@ -58,35 +62,37 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 		fmt.Println("hh", string(msg))
 
-		getListUsers()
-
-		BroadcastMessage("hi from server")
-	
-		
 	}
 }
 
-
-func getListUsers(){
-	
+type msg struct {
+	Event string `json:"event"`
+	Data  any    `json:"data"`
 }
 
-func BroadcastMessage(message string) {
+func BroadcastMessage(event string, data any) {
+	var message msg
+	message.Event = event
+	message.Data = data
+
+	jsonData, err := json.Marshal(message)
+	if err != nil {
+		log.Println("Error marshaling message:", err)
+		return
+	}
+
 	mut.Lock()
 	defer mut.Unlock()
 
 	for userID, conns := range connections {
 		for _, conn := range conns {
-			err := conn.WriteMessage(websocket.TextMessage, []byte(message))
+			err := conn.WriteMessage(websocket.TextMessage, jsonData)
 			if err != nil {
 				fmt.Printf("Error sending message to user %d: %v\n", userID, err)
-				conn.Close()
 			}
 		}
 	}
 }
-
-
 
 func CloseUserConnections(userID int) {
 	mut.Lock()
@@ -102,4 +108,41 @@ func CloseUserConnections(userID int) {
 	}
 
 	delete(connections, userID)
+}
+
+type User struct {
+	Id       int
+	Nickname string
+}
+
+func getListUsers(userID int, db *sql.DB) ([]User, error) {
+	query := `SELECT
+			 u.ID,
+			 u.Nickname
+		  FROM Users u
+		  WHERE u.ID != ?
+		  ORDER BY u.ID DESC
+		`
+
+	row, err := db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	defer row.Close()
+
+	var users []User
+
+	for row.Next() {
+		var u User
+
+		err := row.Scan(&u.Id, &u.Nickname)
+		if err != nil {
+			return nil, err
+		}
+
+		users = append(users, u)
+	}
+
+	return users, nil
 }

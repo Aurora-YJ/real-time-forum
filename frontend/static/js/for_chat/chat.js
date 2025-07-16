@@ -1,3 +1,4 @@
+import { AddUsersList , AddUserToList } from "./users_list.js"
 
 export function showMsgUsr() {
   const socket = new WebSocket("ws://localhost:8080/chat");
@@ -9,17 +10,19 @@ export function showMsgUsr() {
   socket.onmessage = (event) => {
     let msg;
     try {
-      msg = JSON.parse(event.data); 
+      msg = JSON.parse(event.data);
     } catch (err) {
       console.error("Invalid JSON from server:", event.data);
       return;
     }
 
-
     switch (msg.event) {
       case "usersList":
+        AddUsersList(socket , msg.data);
+        break;
 
-        AddUsersList(msg.data);
+      case "newUser":
+        AddUserToList(socket , msg.data);
         break;
 
       case "chatmsg":
@@ -53,26 +56,3 @@ export function sendMsg(msg) {
     console.error("Socket is not open. readyState=", socket.readyState);
   }
 }
-
-function AddUsersList(data) {
-
-  const mesgfrom = document.getElementById("mesgfrom");
-  
-  data.forEach((u) => {
-    const btn = document.createElement("button");
-
-    const ic = document.createElement("i");
-    ic.setAttribute("class", "fa-regular fa-message");
-
-    btn.appendChild(ic);
-    btn.append(" " + u.Nickname);
-
-    mesgfrom.appendChild(btn);
-  });
-}
-
-/*
-<button>
-   <i class="fa-regular fa-message"></i>  youssef    
-</button>
-*/

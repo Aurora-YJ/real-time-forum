@@ -1,4 +1,4 @@
-import {FetchCreatPost} from "./api.js"
+import {FetchCreatPost} from "./../api.js"
 export function creatpostinput() {
   const divcreatpost = document.createElement("div");
 

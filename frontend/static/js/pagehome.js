@@ -1,8 +1,8 @@
 import { home } from "./dom.js";
-import { showMsgUsr  } from "./chat.js";
-import {creatpostinput} from "./creat_post.js"
+import { showMsgUsr  } from "./for_chat/chat.js";
+import {creatpostinput} from "./for_post/creat_post.js"
 
-import {showPost} from "./show_post.js"
+import {showPost} from "./for_post/show_post.js"
 
 
 export async function pagehome() {

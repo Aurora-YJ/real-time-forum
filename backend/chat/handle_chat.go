@@ -48,7 +48,14 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		fmt.Println("error to get users list:", err)
 	}
 
-	BroadcastMessage("usersList", users)
+	sendusers(userID, "usersList", users)
+
+	newUser := User{Id: userID}
+
+	err = db.QueryRow("SELECT Nickname FROM Users WHERE ID=?", userID).Scan(&newUser.Nickname)
+	if err == nil {
+		BroadcastMessage( userID , "newUser", newUser)
+	}
 
 	defer func() {
 		CloseUserConnections(userID)
@@ -70,7 +77,7 @@ type msg struct {
 	Data  any    `json:"data"`
 }
 
-func BroadcastMessage(event string, data any) {
+func sendusers(userid int, event string, data any) {
 	var message msg
 	message.Event = event
 	message.Data = data
@@ -85,10 +92,38 @@ func BroadcastMessage(event string, data any) {
 	defer mut.Unlock()
 
 	for userID, conns := range connections {
-		for _, conn := range conns {
-			err := conn.WriteMessage(websocket.TextMessage, jsonData)
-			if err != nil {
-				fmt.Printf("Error sending message to user %d: %v\n", userID, err)
+		if userID == userid {
+			for _, conn := range conns {
+				err := conn.WriteMessage(websocket.TextMessage, jsonData)
+				if err != nil {
+					fmt.Printf("Error sending message to user %d: %v\n", userID, err)
+				}
+			}
+		}
+	}
+}
+
+func BroadcastMessage(userid int , event string, data any) {
+	var message msg
+	message.Event = event
+	message.Data = data
+
+	jsonData, err := json.Marshal(message)
+	if err != nil {
+		log.Println("Error marshaling message:", err)
+		return
+	}
+
+	mut.Lock()
+	defer mut.Unlock()
+
+	for userID, conns := range connections {
+		if userID != userid {
+			for _, conn := range conns {
+				err := conn.WriteMessage(websocket.TextMessage, jsonData)
+				if err != nil {
+					fmt.Printf("Error sending message to user %d: %v\n", userID, err)
+				}
 			}
 		}
 	}

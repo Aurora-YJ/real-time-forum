@@ -18,6 +18,14 @@ export function AddUserToList(socket, user, currentUserId) {
   btn.dataset.id = user.Id;
 
   btn.addEventListener("click", () => {
+    const msg = {
+      event: "get_old_chat",
+      from: currentUserId,
+      to: user.Id,
+    };
+
+    socket.send(JSON.stringify(msg));
+
     const recUserid = btn.dataset.id;
     console.log("gg", recUserid);
     addDivChat(socket, user, currentUserId);
@@ -25,7 +33,6 @@ export function AddUserToList(socket, user, currentUserId) {
 
   mesgfrom.appendChild(btn);
 }
-
 
 export function AddUsersList(socket, data, currentUserId) {
   const mesgfrom = document.getElementById("mesgfrom");
@@ -42,6 +49,14 @@ export function AddUsersList(socket, data, currentUserId) {
     btn.dataset.id = u.Id;
 
     btn.addEventListener("click", () => {
+      const msg = {
+        event: "get_old_chat",
+        from: currentUserId,
+        to: u.Id,
+      };
+
+      socket.send(JSON.stringify(msg));
+
       addDivChat(socket, u, currentUserId);
     });
 

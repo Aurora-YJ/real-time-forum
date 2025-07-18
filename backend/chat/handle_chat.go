@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"sync"
 
+	"forum/backend/models"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -21,12 +23,11 @@ var (
 )
 
 type ChatMessage struct {
-	Event string `json:"event"`
+	Event   string `json:"event"`
 	From    int    `json:"from"`
 	To      int    `json:"to"`
 	Message string `json:"message"`
 }
-
 
 func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	rawID := r.Context().Value("userId")
@@ -57,7 +58,7 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		if err != nil {
 			fmt.Println("error to get users list:", err)
 		}
-		sendusers(userID , "your_id", userID)
+		sendusers(userID, "your_id", userID)
 		sendusers(userID, "usersList", users)
 
 		newUser := User{Id: userID}
@@ -86,11 +87,28 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			continue
 		}
 
-		if m.Event == "chatmsg" {
-			fmt.Println("--->" , m)
+		switch m.Event {
+		    case "chatmsg":
+		    	From := m.From
+		    	To := m.To
+		    	message := m.Message
+		    	err := models.PutTheMsg(From, To, message, db)
+		    	if err != nil {
+		    		fmt.Println("error insert message:", err)
+		    		continue
+		    	}
+		    case "get_old_chat":
+		    	From := m.From
+		    	To := m.To
+				data , err := models.GetOldMsg(From, To, db)
+				if err != nil {
+					fmt.Println("error to get old messages:", err)
+		    		continue
+		    	}
+				sendusers(userID, "All_chat", data)
+		    default:
+		    	fmt.Println("error ")
 		}
-
-
 
 	}
 }

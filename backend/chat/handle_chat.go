@@ -20,6 +20,14 @@ var (
 	mut         = sync.Mutex{}
 )
 
+type ChatMessage struct {
+	Event string `json:"event"`
+	From    int    `json:"from"`
+	To      int    `json:"to"`
+	Message string `json:"message"`
+}
+
+
 func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	rawID := r.Context().Value("userId")
 	if rawID == nil {
@@ -40,21 +48,24 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	mut.Lock()
+	_, alreadyConnected := connections[userID]
 	connections[userID] = append(connections[userID], conn)
 	mut.Unlock()
 
-	users, err := getListUsers(userID, db)
-	if err != nil {
-		fmt.Println("error to get users list:", err)
-	}
+	if !alreadyConnected {
+		users, err := getListUsers(userID, db)
+		if err != nil {
+			fmt.Println("error to get users list:", err)
+		}
+		sendusers(userID , "your_id", userID)
+		sendusers(userID, "usersList", users)
 
-	sendusers(userID, "usersList", users)
+		newUser := User{Id: userID}
+		err = db.QueryRow("SELECT Nickname FROM Users WHERE ID=?", userID).Scan(&newUser.Nickname)
+		if err == nil {
+			BroadcastMessage(userID, "newUser", newUser)
+		}
 
-	newUser := User{Id: userID}
-
-	err = db.QueryRow("SELECT Nickname FROM Users WHERE ID=?", userID).Scan(&newUser.Nickname)
-	if err == nil {
-		BroadcastMessage( userID , "newUser", newUser)
 	}
 
 	defer func() {
@@ -67,7 +78,19 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			break
 		}
 
-		fmt.Println("hh", string(msg))
+		var m ChatMessage
+
+		err = json.Unmarshal(msg, &m)
+		if err != nil {
+			fmt.Println("error parsing message:", err)
+			continue
+		}
+
+		if m.Event == "chatmsg" {
+			fmt.Println("--->" , m)
+		}
+
+
 
 	}
 }
@@ -103,7 +126,7 @@ func sendusers(userid int, event string, data any) {
 	}
 }
 
-func BroadcastMessage(userid int , event string, data any) {
+func BroadcastMessage(userid int, event string, data any) {
 	var message msg
 	message.Event = event
 	message.Data = data

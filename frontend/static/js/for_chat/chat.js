@@ -18,13 +18,17 @@ export function showMsgUsr() {
 
     switch (msg.event) {
       case "usersList":
-        AddUsersList(socket , msg.data);
+        AddUsersList(socket , msg.data, currentUserId);
         break;
 
       case "newUser":
-        AddUserToList(socket , msg.data);
+        AddUserToList(socket , msg.data , currentUserId);
         break;
 
+      case "your_id":
+        Addtheiduser(socket , msg.data);
+        break;
+  
       case "chatmsg":
         showChatMessage(msg.data);
         break;
@@ -55,4 +59,11 @@ export function sendMsg(msg) {
   } else {
     console.error("Socket is not open. readyState=", socket.readyState);
   }
+}
+
+
+let currentUserId = null; 
+function Addtheiduser(socket, id) {
+  currentUserId = id;
+  console.log("My user ID is:", currentUserId);
 }

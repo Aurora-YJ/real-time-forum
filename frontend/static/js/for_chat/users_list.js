@@ -1,8 +1,12 @@
-import {addDivChat} from "./add_div_chat.js"
+import { addDivChat } from "./add_div_chat.js";
 
 // add teh a new user to the old users......
-export function AddUserToList(socket , user) {
+export function AddUserToList(socket, user, currentUserId) {
   const mesgfrom = document.getElementById("mesgfrom");
+
+  if (document.querySelector(`button[data-id="${user.Id}"]`)) {
+    return;
+  }
 
   const btn = document.createElement("button");
   const ic = document.createElement("i");
@@ -16,17 +20,16 @@ export function AddUserToList(socket , user) {
   btn.addEventListener("click", () => {
     const recUserid = btn.dataset.id;
     console.log("gg", recUserid);
-    addDivChat(socket ,recUserid)
+    addDivChat(socket, user, currentUserId);
   });
 
   mesgfrom.appendChild(btn);
 }
 
 
-// get the users in put theme in list.....
-export function AddUsersList(socket , data) {
+export function AddUsersList(socket, data, currentUserId) {
   const mesgfrom = document.getElementById("mesgfrom");
-
+  mesgfrom.innerHTML = "";
   data.forEach((u) => {
     const btn = document.createElement("button");
 
@@ -39,9 +42,7 @@ export function AddUsersList(socket , data) {
     btn.dataset.id = u.Id;
 
     btn.addEventListener("click", () => {
-      const recUserid = btn.dataset.id;
-      console.log("gg", recUserid);
-      addDivChat(socket , recUserid)
+      addDivChat(socket, u, currentUserId);
     });
 
     mesgfrom.appendChild(btn);

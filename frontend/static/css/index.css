@@ -411,3 +411,102 @@ main article .potess .post .catigoryandcomment .comment button {
   justify-content: space-between;
   gap: 10px;
 }
+
+
+/* chat */
+
+
+#divchat {
+
+    position: absolute;
+    bottom: 80px;
+    right: 10px;
+    width: 20%;
+    height: 500px;
+    background-color: bisque;
+    z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+#header {
+    width: 90%;
+    height: 6%;
+    background-color: #2C3930;
+    padding: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #ccc;
+}
+
+#chatwith {
+     width: 90%;
+    height: 65%;
+    background-color: bisque;
+    padding: 20px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #ccc;
+}
+
+#inputBtn {
+    display: flex;
+     width: 100%;
+    height: 13%;
+    background-color: #2C3930;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #ccc;
+}
+
+#inputt {
+    width: 65%;
+    height:60%;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    background-color: bisque;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+}
+
+#inputt:focus {
+  border-color: #4A90E2;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+}
+
+
+#buttonn {
+  width: 25%;
+  height:60%;
+  margin: 10px;
+  margin-left: 10px;
+  background-color: var(--btn2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#buttonn:hover {
+  background-color: #357ABD;
+  transform: scale(1.05);
+}
+
+#buttonn:active {
+  transform: scale(0.98);
+}
+
+

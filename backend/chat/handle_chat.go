@@ -58,8 +58,8 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		if err != nil {
 			fmt.Println("error to get users list:", err)
 		}
-		sendusers(userID, "your_id", userID)
-		sendusers(userID, "usersList", users)
+		sendToUser(userID, "your_id", userID)
+		sendToUser(userID, "usersList", users)
 
 		newUser := User{Id: userID}
 		err = db.QueryRow("SELECT Nickname FROM Users WHERE ID=?", userID).Scan(&newUser.Nickname)
@@ -89,9 +89,15 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 		switch m.Event {
 		    case "chatmsg":
-		    	From := m.From
 		    	To := m.To
+		    	From := m.From
 		    	message := m.Message
+				
+				var data ChatMessage
+
+				data.From = From
+				data.Message = message
+				sendToUser(To, "chatmsgnow" , data)
 		    	err := models.PutTheMsg(From, To, message, db)
 		    	if err != nil {
 		    		fmt.Println("error insert message:", err)
@@ -105,7 +111,8 @@ func HandleChat(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 					fmt.Println("error to get old messages:", err)
 		    		continue
 		    	}
-				sendusers(userID, "All_chat", data)
+
+				sendToUser(userID, "All_chat", data)
 		    default:
 		    	fmt.Println("error ")
 		}
@@ -118,7 +125,7 @@ type msg struct {
 	Data  any    `json:"data"`
 }
 
-func sendusers(userid int, event string, data any) {
+func sendToUser(userid int, event string, data any) {
 	var message msg
 	message.Event = event
 	message.Data = data
